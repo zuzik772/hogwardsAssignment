@@ -11,6 +11,12 @@
     <h1>Hogwarts School of Witchcraft and Wizardry</h1>
 
     <p>
+      Filter Students:
+      <button class="filter" data-action="filter" data-filter="enrolled">Enrolled Students</button>
+      <button class="filter" data-action="filter" data-filter="expeclled">Expelled Students</button>
+      <button class="filter" data-action="filter" data-filter="all">All Students</button>
+    </p>
+    <p>
       Filter House:
       <button class="filter" data-action="filter" data-filter="Gryffindor">Gryffindor</button>
       <button class="filter" data-action="filter" data-filter="Hufflepuff">Hufflepuff</button>
@@ -18,14 +24,12 @@
       <button class="filter" data-action="filter" data-filter="Slytherin">Slytherin</button>
     </p>
     <p>
-      Filter:
+      Filter Responsabilities:
       <button class="filter" data-action="filter" data-filter="captains">Captains</button>
       <button class="filter" data-action="filter" data-filter="prefects">Prefects</button>
-      <button class="filter" data-action="filter" data-filter="players">Quidditch players</button>
-      <button class="filter" data-action="filter" data-filter="enrolled">Enrolled Students</button>
-      <button class="filter" data-action="filter" data-filter="expeclled">Expelled Students</button>
-      <button class="filter" data-action="filter" data-filter="all">All Students</button>
+      <button class="filter" data-action="filter" dat a-filter="players">Quidditch players</button>
     </p>
+    <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
 
     <hr />
 
@@ -45,7 +49,7 @@
     </table>
     <template id="alumni">
       <tr>
-        <td data-field="firstName">FIRST NAME</td>
+        <td data-field="firstName"><a href="#"></a></td>
         <td data-field="lastName">LAST NAME</td>
         <td data-field="middleName">MIDDLE NAME</td>
         <td data-field="nickName">NICK NAME</td>

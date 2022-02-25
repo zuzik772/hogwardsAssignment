@@ -1,3 +1,37 @@
-[data-action] {
+[data-action],
+[data-field="firstName"] {
   cursor: pointer;
+}
+
+li {
+  list-style: none  ;
+}
+#studentPopUp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* pointer-events: none; */
+}
+
+#studentPopUp .content {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  padding: 2rem;
+  border-radius: 25px;
+  background-color: lightblue;
+}
+.closebutton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+#studentPopUp.hidden {
+  display: none;
 }

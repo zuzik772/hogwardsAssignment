@@ -142,6 +142,15 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=gender]").textContent = alumni.gender;
   clone.querySelector("[data-field=house]").textContent = alumni.house;
 
+  // student click
+  let studentBtn = clone.querySelectorAll("td");
+  studentBtn.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      showPopUp(alumni);
+      btn.style.backgroundColor = "yellow";
+    });
+  });
+
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
   //   console.table(alumni);
@@ -204,4 +213,22 @@ function searchFunction() {
       }
     }
   }
+}
+
+function showPopUp(student) {
+  document.querySelector("#studentPopUp").classList.remove("hidden");
+  document.querySelector("#studentPopUp .closebutton").addEventListener("click", closePopUp);
+  document.querySelector("#studentPopUp .firstname").textContent = student.firstName;
+  document.querySelector("#studentPopUp .lastname").textContent = student.lastName;
+  document.querySelector("#studentPopUp .middlename").textContent = student.middleName;
+  document.querySelector("#studentPopUp .nickname").textContent = student.nickName;
+  document.querySelector("#studentPopUp .image img").src = `images/${student.image}`;
+  document.querySelector("#studentPopUp .house").textContent = student.house;
+  document.querySelector("#studentPopUp .blood").textContent = student.firstName;
+  document.querySelector("#studentPopUp .characteristics").textContent = student.firstName;
+}
+
+function closePopUp() {
+  console.log("close pop up");
+  document.querySelector("#studentPopUp").classList.add("hidden");
 }

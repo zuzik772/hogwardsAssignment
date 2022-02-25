@@ -49,7 +49,7 @@
     </table>
     <template id="alumni">
       <tr>
-        <td data-field="firstName"><a href="#"></a></td>
+        <td data-field="firstName">FIRST NAME</td>
         <td data-field="lastName">LAST NAME</td>
         <td data-field="middleName">MIDDLE NAME</td>
         <td data-field="nickName">NICK NAME</td>
@@ -58,6 +58,26 @@
         <td data-field="house">HOUSE</td>
       </tr>
     </template>
+
+    <div id="studentPopUp" class="hidden">
+      <div class="content">
+        <button class="closebutton">X</button>
+        <h2>Hogwarts School of Witchcraft and Wizardry</h2>
+        <ul>
+          <li class="firstname">First name</li>
+          <li class="middlename">Middle name</li>
+          <li class="nickname">Nick name</li>
+          <li class="lastname">Last name</li>
+          <li class="image"><img src="" alt="" /></li>
+          <li class="house">House Crest</li>
+          <li class="blood">Blood-status</li>
+          <li class="characteristics">additional characteristics</li>
+        </ul>
+
+        <p><button data-action="remove1">remove</button> <span class="animal1">text</span></p>
+      </div>
+    </div>
+
     <script src="hogwarts.js"></script>
   </body>
 </html>

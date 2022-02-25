@@ -3,20 +3,58 @@ window.addEventListener("DOMContentLoaded", start);
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 
 let allStudents = [];
+let filteredArray;
 const Student = {
   firstName: "",
   lastName: "",
   middleName: "",
   nickName: "",
   image: "",
+  gender: "",
   house: "",
 };
+
+const settings = {
+  isSortDir: false,
+};
 function start() {
+  // filter click
+  const filterBtns = document.querySelectorAll("[data-action=filter]");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      filterList(this.dataset.filter);
+      console.log("this datase filter is", this.dataset.filter);
+    });
+  });
+  // sort click
+  const sortBtns = document.querySelectorAll("[data-action=sort]");
+  sortBtns.forEach((sortBtn) => {
+    sortBtn.addEventListener("click", function () {
+      sortBtn.style.backgroundColor = "yellow";
+      if (settings.isSortDir === true) {
+        settings.isSortDir = false;
+        console.log("its false");
+        sortList(filteredArray, this.dataset.sort, "asc");
+      } else {
+        settings.isSortDir = true;
+        console.log("its true");
+        sortList(filteredArray, this.dataset.sort, "desc");
+      }
+
+      // sortList(filteredArray, this.dataset.sort);
+    });
+  });
+
+  loadJson();
+}
+
+function loadJson() {
   fetch(url)
     .then((response) => response.json())
     .then((allStudentData) => allStudentData.forEach(prepareObjects));
 }
 function prepareObjects(studentObject) {
+  filteredArray = allStudents;
   let fullname = studentObject.fullname.trim();
   let newFullname = capitalization(fullname);
 
@@ -31,28 +69,16 @@ function prepareObjects(studentObject) {
     student.middleName = middle;
   }
 
-  // const array1 = [{ name: "Klaus" }, { name: "Blaus" }, { name: "Mlaus" }];
-
-  // const isLargeNumber = (element) => element.name === "Blaus";
-  // const isNamAppearingInTheRestArr = (elm) => elm.lastName === "Potter";
-  // if (arr.findIndex(isNamAppearingInTheRestArr) !== -1) {
-  //   console.log("we are here looking for the same name");
-  // }
-  // if (allStudents.slice(i))
   student.image = getImage(newFullname);
-  // student.lastName.toLowerCase() + "_" + student.firstName.charAt(0).toLowerCase() + ".png";
-  // if (student.lastName.includes("-")) {
-  //   student.lastName.substring(student.lastName.indexOf("-") + 1);
-  // } else {
-  //   console.log("fix name");
-  // }
 
   let newHouse = capitalization(studentObject.house.trim());
   student.house = newHouse;
+  let studentGender = studentObject.gender;
+  student.gender = studentGender;
   // console.log("student object", student.firstName);
   allStudents.push(student);
 
-  displayList();
+  displayList(allStudents);
 }
 
 function capitalization(fullname) {
@@ -95,12 +121,12 @@ function getImage(fullname) {
 // //
 // }
 
-function displayList() {
+function displayList(students) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
 
   // build a new list
-  allStudents.forEach(displayStudent);
+  students.forEach(displayStudent);
 }
 
 function displayStudent(alumni) {
@@ -113,9 +139,46 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=middleName]").textContent = alumni.middleName;
   clone.querySelector("[data-field=nickName]").textContent = alumni.nickName;
   clone.querySelector("[data-field=image] img").src = `images/${alumni.image}`;
+  clone.querySelector("[data-field=gender]").textContent = alumni.gender;
   clone.querySelector("[data-field=house]").textContent = alumni.house;
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
   //   console.table(alumni);
+}
+// filtering
+function filterList(house) {
+  let list = allStudents.filter(isStudentHouse);
+  function isStudentHouse(student) {
+    if (student.house === house) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if (list.length === 0) {
+    list = allStudents;
+  }
+  filteredArray = list;
+  console.table(filteredArray);
+  displayList(filteredArray);
+}
+
+// sorting
+function sortList(arr, propertyName, direction) {
+  let list = arr.sort(isPropertyName);
+  if (direction === "desc") {
+    list = list.reverse();
+  }
+  // console.log(list);
+  function isPropertyName(studentA, studentB) {
+    if (studentA[propertyName] < studentB[propertyName]) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
+  displayList(list);
 }

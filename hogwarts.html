@@ -4,20 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="hogwarts.css" />
     <title>hogwarts</title>
   </head>
   <body>
-    <h1>Hogwards - clean data list</h1>
+    <h1>Hogwarts School of Witchcraft and Wizardry</h1>
+
+    <p>
+      Filter House:
+      <button class="filter" data-action="filter" data-filter="Gryffindor">Gryffindor</button>
+      <button class="filter" data-action="filter" data-filter="Hufflepuff">Hufflepuff</button>
+      <button class="filter" data-action="filter" data-filter="Ravenclaw">Ravenclaw</button>
+      <button class="filter" data-action="filter" data-filter="Slytherin">Slytherin</button>
+    </p>
+    <p>
+      Filter:
+      <button class="filter" data-action="filter" data-filter="captains">Captains</button>
+      <button class="filter" data-action="filter" data-filter="prefects">Prefects</button>
+      <button class="filter" data-action="filter" data-filter="players">Quidditch players</button>
+      <button class="filter" data-action="filter" data-filter="enrolled">Enrolled Students</button>
+      <button class="filter" data-action="filter" data-filter="expeclled">Expelled Students</button>
+      <button class="filter" data-action="filter" data-filter="all">All Students</button>
+    </p>
+
+    <hr />
 
     <table id="list">
       <thead>
         <tr>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Middle name</th>
-          <th>Nick name</th>
-          <th>Image</th>
-          <th>House</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="middlename">Middle name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="nickname">Nick name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -29,7 +50,7 @@
         <td data-field="middleName">MIDDLE NAME</td>
         <td data-field="nickName">NICK NAME</td>
         <td data-field="image"><img src="" alt="" /></td>
-
+        <td data-field="gender">GENDER</td>
         <td data-field="house">HOUSE</td>
       </tr>
     </template>

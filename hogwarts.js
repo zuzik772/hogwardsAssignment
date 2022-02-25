@@ -59,9 +59,9 @@ function prepareObjects(studentObject) {
   let newFullname = capitalization(fullname);
 
   const student = Object.create(Student);
-  let middle = newFullname.substring(newFullname.indexOf(" ") + 1, newFullname.lastIndexOf(" "));
-  student.firstName = newFullname.substring(0, newFullname.indexOf(" "));
-  student.lastName = newFullname.substring(newFullname.lastIndexOf(" "));
+  let middle = newFullname.substring(newFullname.indexOf(" ") + 1, newFullname.lastIndexOf(" ")).trim();
+  student.firstName = newFullname.substring(0, newFullname.indexOf(" ")).trim();
+  student.lastName = newFullname.substring(newFullname.lastIndexOf(" ")).trim();
 
   if (middle.charAt(0) === '"') {
     student.nickName = middle;
@@ -161,7 +161,7 @@ function filterList(house) {
     list = allStudents;
   }
   filteredArray = list;
-  console.table(filteredArray);
+  // console.table(filteredArray);
   displayList(filteredArray);
 }
 
@@ -171,7 +171,7 @@ function sortList(arr, propertyName, direction) {
   if (direction === "desc") {
     list = list.reverse();
   }
-  // console.log(list);
+  console.log(list);
   function isPropertyName(studentA, studentB) {
     if (studentA[propertyName] < studentB[propertyName]) {
       return -1;

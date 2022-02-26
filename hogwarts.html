@@ -11,23 +11,23 @@
     <h1>Hogwarts School of Witchcraft and Wizardry</h1>
 
     <p>
-      Filter Students:
-      <button class="filter" data-action="filter" data-filter="enrolled">Enrolled Students</button>
-      <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
-      <button class="filter" data-action="filter" data-filter="all">All Students</button>
+      Filter 🎓Students:
+      <button class="filter" data-action="filterStudent" data-filter="enrolled">✅Enrolled Students</button>
+      <button class="filter" data-action="filterStudent" data-filter="expelled">❌Expelled Students</button>
+      <button class="filter" data-action="filterStudent" data-filter="all">🎓All Students</button>
     </p>
     <p>
-      Filter House:
-      <button class="filter" data-action="filter" data-filter="Gryffindor">Gryffindor</button>
-      <button class="filter" data-action="filter" data-filter="Hufflepuff">Hufflepuff</button>
-      <button class="filter" data-action="filter" data-filter="Ravenclaw">Ravenclaw</button>
-      <button class="filter" data-action="filter" data-filter="Slytherin">Slytherin</button>
+      Filter 🏰House:
+      <button class="filter" data-action="filterHouse" data-filter="Gryffindor">🦁Gryffindor</button>
+      <button class="filter" data-action="filterHouse" data-filter="Hufflepuff">🦡Hufflepuff</button>
+      <button class="filter" data-action="filterHouse" data-filter="Ravenclaw">🦅Ravenclaw</button>
+      <button class="filter" data-action="filterHouse" data-filter="Slytherin">🐍Slytherin</button>
     </p>
     <p>
       Filter Responsabilities:
       <button class="filter" data-action="filter" data-filter="captains">Captains</button>
-      <button class="filter" data-action="filter" data-filter="prefects">Prefects</button>
-      <button class="filter" data-action="filter" data-filter="players">Quidditch players</button>
+      <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
+      <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button>
     </p>
     <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
 
@@ -36,6 +36,7 @@
     <table id="list">
       <thead>
         <tr>
+          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">📛</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle name</th>
@@ -50,14 +51,15 @@
     </table>
     <template id="alumni">
       <tr>
-        <td data-field="firstName">FIRST NAME</td>
-        <td data-field="lastName">LAST NAME</td>
-        <td data-field="middleName">MIDDLE NAME</td>
-        <td data-field="nickName">NICK NAME</td>
-        <td data-field="image"><img src="" alt="" /></td>
-        <td data-field="gender">GENDER</td>
-        <td data-field="house">HOUSE</td>
-        <td data-field="status">STATUS</td>
+        <td data-field="prefect" data-prefect="false"></td>
+        <td class="popup" data-field="firstName">FIRST NAME</td>
+        <td class="popup" data-field="lastName">LAST NAME</td>
+        <td class="popup" data-field="middleName">MIDDLE NAME</td>
+        <td class="popup" data-field="nickName">NICK NAME</td>
+        <td class="popup" data-field="image"><img src="" alt="" /></td>
+        <td class="popup" data-field="gender">GENDER</td>
+        <td class="popup" data-field="house">HOUSE</td>
+        <td class="popup" data-field="status">STATUS</td>
       </tr>
     </template>
 
@@ -73,12 +75,34 @@
           <li class="image"><img src="" alt="" /></li>
           <li class="house">House Crest</li>
           <li class="blood">Blood-status</li>
+          <li class="prefect">Prefect - status:</li>
           <li class="characteristics">additional characteristics</li>
         </ul>
 
         <p>
           <button data-action="remove">Expell <span class="expell">text</span></button>
         </p>
+      </div>
+    </div>
+
+    <!-- Dialogs for handling too many prefects -->
+
+    <div id="onlytwoprefects" class="hidden">
+      <div class="dialogcontent">
+        <button class="closeButton">close</button>
+        <h3>You can only have four prefects!</h3>
+        <h4>Remove one, before you appoint more</h4>
+        <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
+        <p><button data-action="remove2">remove</button> <span class="student2">NAME</span></p>
+      </div>
+    </div>
+
+    <div id="onlyonekind" class="hidden">
+      <div class="dialogcontent">
+        <button class="closeButton">close</button>
+        <h3>You can only have one prefect from each house</h3>
+        <h4>Remove the other if you want to appoint a new one</h4>
+        <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
       </div>
     </div>
 

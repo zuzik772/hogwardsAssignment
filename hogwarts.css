@@ -1,5 +1,5 @@
 [data-action],
-[data-field="firstName"] {
+[data-field] {
   cursor: pointer;
 }
 
@@ -10,8 +10,10 @@
 li {
   list-style: none;
 }
-#studentPopUp {
-  position: absolute;
+#studentPopUp,
+#onlytwoprefects,
+#onlyonekind {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -22,7 +24,9 @@ li {
   /* pointer-events: none; */
 }
 
-#studentPopUp .content {
+#studentPopUp .content,
+#onlytwoprefects .dialogcontent,
+#onlyonekind .dialogcontent {
   position: relative;
   width: fit-content;
   height: fit-content;
@@ -36,6 +40,28 @@ li {
   right: 1rem;
 }
 
-#studentPopUp.hidden {
+#studentPopUp.hidden,
+#onlytwoprefects.hidden,
+#onlyonekind.hidden {
   display: none;
+}
+
+.dialogcontent {
+  background-color: salmon;
+}
+
+/****** PREFECT ******/
+/* [data-field="prefect"][data-winner="false"] {
+  filter: grayscale(100%);
+  cursor: pointer;
+} */
+
+td[data-field="prefect"]::after {
+  content: "📛";
+  /* filter: grayscale(1); */
+}
+
+td[data-field="prefect"][data-prefect="false"]::after {
+  content: "📛";
+  filter: grayscale(1);
 }

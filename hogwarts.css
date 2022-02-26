@@ -3,8 +3,12 @@
   cursor: pointer;
 }
 
+[data-action="remove"] {
+  background-color: orange;
+}
+
 li {
-  list-style: none  ;
+  list-style: none;
 }
 #studentPopUp {
   position: absolute;

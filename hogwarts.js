@@ -192,36 +192,6 @@ function displayStudent(alumni) {
   //   console.table(alumni);
 }
 
-// function tryToMakePrefect(selectedStudent) {
-//   // take all the students and filter them by every student where student.prefect is true
-//   const prefects = allStudents.filter((student) => student.prefect);
-//   const numberOfPrefects = prefects.length;
-//   const other = prefects.filter((student) => student.house === selectedStudent.house).shift();
-//   if (other !== undefined) {
-//     console.log("There can be only one prefect of gender");
-//     removeOtherStudent(other);
-//   } else if (numberOfPrefects >= 8) {
-//     console.log("There can only be two prefects!");
-//     removePrefectAorB(prefects[0], prefects[1]);
-//   } else {
-//     makePrefect(selectedStudent);
-//   }
-
-// function tryToMakeprefect(selectedStudent) {
-// const prefects = allStudents.filter((student) => student.prefect);
-// const others = prefects.filter((student) => student.house === selectedStudent.house);
-// makeprefect(selectedStudent);
-// if (others.length >= 2) {
-// console.log("there can only be two winners from this house");
-// makeprefect(selectedStudent);
-// document.querySelector("#removeOther").classList.remove("hide");
-// document.querySelector(".closebutton").addEventListener("click", closeWindow);
-// document.querySelector("#removeA").addEventListener("click", clickRemoveA);
-// document.querySelector("#removeB").addEventListener("click", clickRemoveB);
-// } else {
-// makeprefect(selectedStudent);
-// }
-
 function tryToMakePrefect(selectedStudent) {
   // take all the students and filter them by every student where student.prefect is true
   const prefects = activeStudents.filter((student) => student.prefect);
@@ -239,11 +209,6 @@ function tryToMakePrefect(selectedStudent) {
       makePrefect(selectedStudent);
     }
   }
-  // console.log("prefect student is", prefects);
-  // console.log("selected student is", selectedStudent);
-
-  // console.log("prefect student is", numberOfPrefects);
-  // console.log("prefect student is", other);
 
   // function removeOtherStudent(otherStudent) {
   //   console.log("remove other student");
@@ -395,7 +360,6 @@ function showPopUp(student) {
 }
 function closePopUp() {
   document.querySelector("#studentPopUp").classList.add("hidden");
-  // console.log("student:", student.firstName);
   // document.querySelector("#studentPopUp [data-action=remove]").textContent = "Expell: " + student.firstName + " " + student.lastName;
   document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "orange";
 }
@@ -405,9 +369,8 @@ function expellStudent(expelledStudent) {
   document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
   document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
   document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
-  // alert(`${expelledStudent.firstName} has been expelled!`);
+  alert(`${expelledStudent.firstName} has been expelled!`);
   document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
-  // let expelled = (expelledStudent.expelled = true);
 
   let index = activeStudents.indexOf(expelledStudent);
   if (index > -1) {

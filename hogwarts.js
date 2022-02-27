@@ -1,6 +1,7 @@
 "use-strict";
 window.addEventListener("DOMContentLoaded", start);
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
+const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
 
 let allStudents = [];
 let filteredArray;
@@ -16,6 +17,7 @@ const Student = {
   house: "",
   expelled: false,
   prefect: false,
+  blood: "",
 };
 
 const settings = {
@@ -54,7 +56,7 @@ function start() {
   const sortBtns = document.querySelectorAll("[data-action=sort]");
   sortBtns.forEach((sortBtn) => {
     sortBtn.addEventListener("click", function () {
-      sortBtn.style.backgroundColor = "yellow";
+      // sortBtn.style.backgroundColor = "yellow";
       if (settings.isSortDir === true) {
         settings.isSortDir = false;
         console.log("its false");
@@ -77,6 +79,7 @@ function loadJson() {
     .then((response) => response.json())
     .then((allStudentData) => allStudentData.forEach(prepareObjects));
 }
+
 function prepareObjects(studentObject) {
   filteredArray = allStudents;
   let fullname = studentObject.fullname.trim();
@@ -98,6 +101,9 @@ function prepareObjects(studentObject) {
   student.house = newHouse;
   let studentGender = studentObject.gender;
   student.gender = studentGender;
+
+  let studentBlood = studentObject.half;
+  student.blood = studentBlood;
 
   allStudents.push(student);
   activeStudents.push(student);
@@ -158,6 +164,7 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=image] img").src = `images/${alumni.image}`;
   clone.querySelector("[data-field=gender]").textContent = alumni.gender;
   clone.querySelector("[data-field=house]").textContent = alumni.house;
+  clone.querySelector("[data-field=blood]").textContent = alumni.blood;
   // clone.querySelector("[data-field=status]").textContent = alumni.expelled;
   if (alumni.expelled) {
     clone.querySelector("[data-field=status]").textContent = "expelled";
@@ -172,7 +179,7 @@ function displayStudent(alumni) {
   studentBtn.forEach((btn) => {
     btn.addEventListener("click", function () {
       showPopUp(alumni);
-      btn.style.backgroundColor = "yellow";
+      // btn.style.backgroundColor = "yellow";
     });
   });
   // prefect click
@@ -237,7 +244,8 @@ function tryToMakePrefect(selectedStudent) {
   function removePrefectAorB(prefectA, prefectB) {
     console.log("remove prefectA or prefectB");
     document.querySelector("#onlytwoprefects").classList.remove("hidden");
-    document.querySelector("#onlytwoprefects .closeButton").addEventListener("click", closeDialog);
+    // document.querySelector("#onlytwoprefects .closeButton").addEventListener("click", closeDialog);
+
     document.querySelector("#onlytwoprefects [data-action=remove1]").addEventListener("click", clickRemoveA);
     document.querySelector("#onlytwoprefects [data-action=remove2]").addEventListener("click", clickRemoveB);
 
@@ -248,7 +256,8 @@ function tryToMakePrefect(selectedStudent) {
     function closeDialog() {
       document.querySelector("#onlytwoprefects").classList.add("hidden");
       // its good practice to remove event listener if u dont need it anymore
-      document.querySelector("#onlytwoprefects .closeButton").removeEventListener("click", closeDialog);
+
+      // document.querySelector("#onlytwoprefects .closeButton").removeEventListener("click", closeDialog);
       document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
       document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
     }

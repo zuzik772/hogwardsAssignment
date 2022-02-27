@@ -5,6 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="hogwarts.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Shizuru&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
     <title>hogwarts</title>
   </head>
   <body>
@@ -36,14 +45,16 @@
     <table id="list">
       <thead>
         <tr>
-          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">📛</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect-status</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="nickName">Nick name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
+          <!-- <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th> -->
           <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="blood">Blood-status</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="status">Status</th>
         </tr>
       </thead>
@@ -52,13 +63,15 @@
     <template id="alumni">
       <tr>
         <td data-field="prefect" data-prefect="false"></td>
+        <td class="popup" data-field="image"><img src="" alt="" /></td>
         <td class="popup" data-field="firstName">FIRST NAME</td>
         <td class="popup" data-field="lastName">LAST NAME</td>
         <td class="popup" data-field="middleName">MIDDLE NAME</td>
         <td class="popup" data-field="nickName">NICK NAME</td>
-        <td class="popup" data-field="image"><img src="" alt="" /></td>
+        <!-- <td class="popup" data-field="image"><img src="" alt="" /></td> -->
         <td class="popup" data-field="gender">GENDER</td>
         <td class="popup" data-field="house">HOUSE</td>
+        <td class="popup" data-field="blood">BLOOD STATUS</td>
         <td class="popup" data-field="status">STATUS</td>
       </tr>
     </template>
@@ -68,11 +81,12 @@
         <button class="closebutton">X</button>
         <h2>Hogwarts School of Witchcraft and Wizardry</h2>
         <ul>
+          <li class="image"><img src="" alt="" /></li>
           <li class="firstname">First name</li>
           <li class="middlename">Middle name</li>
           <li class="nickname">Nick name</li>
           <li class="lastname">Last name</li>
-          <li class="image"><img src="" alt="" /></li>
+          <!-- <li class="image"><img src="" alt="" /></li> -->
           <li class="house">House Crest</li>
           <li class="blood">Blood-status</li>
           <li class="prefect">Prefect - status:</li>
@@ -89,7 +103,7 @@
 
     <div id="onlytwoprefects" class="hidden">
       <div class="dialogcontent">
-        <button class="closeButton">close</button>
+        <!-- <button class="closeButton">close</button> -->
         <h3>You can have only 2 prefects from 1 house!</h3>
         <h4>Remove one, before you appoint more</h4>
         <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>

@@ -1,14 +1,45 @@
 [data-action],
 [data-field] {
   cursor: pointer;
+  font-family: 'Josefin Sans', sans-serif;
 }
-
+[data-field="prefect"]{
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
 [data-action="remove"] {
   background-color: orange;
+}
+* {
+  color: orange;
+}
+body {
+  background-color: rgb(56, 56, 56);
+
+}
+h1 {
+  font-size: 5rem;
+  font-family: "Shizuru", cursive;
+  color: orange;
+  text-align: center;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 li {
   list-style: none;
+}
+button {
+   background-color: rgb(41, 41, 41);
+}
+input,
+button:hover {
+ background-color: rgb(15, 15, 15);
+}
+
+table {
+  margin: 0 auto;
 }
 #studentPopUp,
 #onlytwoprefects,
@@ -32,9 +63,9 @@ li {
   height: fit-content;
   padding: 2rem;
   border-radius: 25px;
-  background-color: lightblue;
+  background-color: rgb(22, 76, 94);
 }
-.closebutton {
+button .closebutton {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -58,7 +89,9 @@ li {
 
 td[data-field="prefect"]::after {
   content: "📛";
-  /* filter: grayscale(1); */
+ display: block;
+ width: fit-content;
+ margin: 0 auto;
 }
 
 td[data-field="prefect"][data-prefect="false"]::after {

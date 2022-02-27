@@ -42,6 +42,10 @@ function start() {
         displayList(expelledStudents);
         // displayList(filterExpelledList(expelledStudents));
         console.log("i am empty", expelledStudents);
+      } else if (this.dataset.filter === "enrolled") {
+        displayList(activeStudents);
+        // displayList(filterExpelledList(expelledStudents));
+        console.log("i am active", activeStudents);
       }
     });
   });
@@ -161,12 +165,8 @@ function displayStudent(alumni) {
     clone.querySelector("[data-field=status]").textContent = "active";
   }
   //display prefect
-  // clone.querySelector("[data-field=prefect]").dataset.prefect = alumni.prefect;
-  // if (alumni.prefect) {
-  //   clone.querySelector("[data-field=prefect]").textContent = "t";
-  // } else {
-  //   clone.querySelector("[data-field=prefect]").textContent = "f";
-  // }
+  clone.querySelector("[data-field=prefect]").dataset.prefect = alumni.prefect;
+
   // student click
   let studentBtn = clone.querySelectorAll("td.popup");
   studentBtn.forEach((btn) => {
@@ -182,8 +182,9 @@ function displayStudent(alumni) {
       alumni.prefect = false;
     } else {
       // alumni.prefect = true;
-      tryToMakeWinner(alumni);
+      tryToMakePrefect(alumni);
     }
+
     buildList();
   }
   // append clone to list
@@ -191,78 +192,115 @@ function displayStudent(alumni) {
   //   console.table(alumni);
 }
 
-function tryToMakeWinner(selectedStudent) {
-  // take all the students and filter them by every student where student.prefect is true
-  const prefects = allStudents.filter((student) => student.prefect);
-  const numberOfPrefects = prefects.length;
-  const other = prefects.filter((student) => student.house === selectedStudent.house).shift();
-  console.log("other is ", other);
-  if (other !== undefined) {
-    console.log("There can be only one prefect of gender");
-    removeOtherStudent(other);
-  } else if (numberOfPrefects >= 8) {
-    console.log("There can only be two prefects!");
-    removePrefectAorB(prefects[0], prefects[1]);
-  } else {
-    makePrefect(selectedStudent);
-  }
+// function tryToMakePrefect(selectedStudent) {
+//   // take all the students and filter them by every student where student.prefect is true
+//   const prefects = allStudents.filter((student) => student.prefect);
+//   const numberOfPrefects = prefects.length;
+//   const other = prefects.filter((student) => student.house === selectedStudent.house).shift();
+//   if (other !== undefined) {
+//     console.log("There can be only one prefect of gender");
+//     removeOtherStudent(other);
+//   } else if (numberOfPrefects >= 8) {
+//     console.log("There can only be two prefects!");
+//     removePrefectAorB(prefects[0], prefects[1]);
+//   } else {
+//     makePrefect(selectedStudent);
+//   }
 
-  function removeOtherStudent(otherStudent) {
-    console.log("remove other student");
-    document.querySelector("#onlyonekind").classList.remove("hidden");
-    document.querySelector("#onlyonekind .closeButton").addEventListener("click", closeDialog);
-    document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
-    document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
+// function tryToMakeprefect(selectedStudent) {
+// const prefects = allStudents.filter((student) => student.prefect);
+// const others = prefects.filter((student) => student.house === selectedStudent.house);
+// makeprefect(selectedStudent);
+// if (others.length >= 2) {
+// console.log("there can only be two winners from this house");
+// makeprefect(selectedStudent);
+// document.querySelector("#removeOther").classList.remove("hide");
+// document.querySelector(".closebutton").addEventListener("click", closeWindow);
+// document.querySelector("#removeA").addEventListener("click", clickRemoveA);
+// document.querySelector("#removeB").addEventListener("click", clickRemoveB);
+// } else {
+// makeprefect(selectedStudent);
+// }
+
+function tryToMakePrefect(selectedStudent) {
+  // take all the students and filter them by every student where student.prefect is true
+  const prefects = activeStudents.filter((student) => student.prefect);
+  const other = prefects.filter((student) => student.house === selectedStudent.house);
+  const numberOfOthers = other.length;
+
+  console.log("other student is", other);
+  if (selectedStudent.expelled === false) {
+    makePrefect(selectedStudent);
+    if (numberOfOthers === 2) {
+      console.log("you can have only 2 prefects from 1 house", other);
+      // removeOtherStudent(other);
+      removePrefectAorB(other[0], other[1]);
+    } else {
+      makePrefect(selectedStudent);
+    }
+  }
+  // console.log("prefect student is", prefects);
+  // console.log("selected student is", selectedStudent);
+
+  // console.log("prefect student is", numberOfPrefects);
+  // console.log("prefect student is", other);
+
+  // function removeOtherStudent(otherStudent) {
+  //   console.log("remove other student");
+  //   document.querySelector("#onlyonekind").classList.remove("hidden");
+  //   document.querySelector("#onlyonekind .closeButton").addEventListener("click", closeDialog);
+  //   document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
+  //   document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
+  //   // show names on buttons
+  //   document.querySelector("#onlyonekind .student1").textContent = otherStudent.firstName + ", " + otherStudent.lastName;
+
+  //   function closeDialog() {
+  //     document.querySelector("#onlyonekind").classList.add("hidden");
+  //     // its good practice to remove event listener if u dont need it anymore
+  //     document.querySelector("#onlyonekind .closeButton").removeEventListener("click", closeDialog);
+  //     document.querySelector("#onlyonekind [data-action=remove1]").removeEventListener("click", clickRemoveOther);
+  //   }
+
+  //   function clickRemoveOther() {
+  //     removePrefect(otherStudent);
+  //     makePrefect(selectedStudent);
+  //     buildList();
+  //     closeDialog();
+  //   }
+  // }
+  console.log("prefect student is", prefects);
+  function removePrefectAorB(prefectA, prefectB) {
+    console.log("remove prefectA or prefectB");
+    document.querySelector("#onlytwoprefects").classList.remove("hidden");
+    document.querySelector("#onlytwoprefects .closeButton").addEventListener("click", closeDialog);
+    document.querySelector("#onlytwoprefects [data-action=remove1]").addEventListener("click", clickRemoveA);
+    document.querySelector("#onlytwoprefects [data-action=remove2]").addEventListener("click", clickRemoveB);
+
     // show names on buttons
-    document.querySelector("#onlyonekind .student1").textContent = otherStudent.firstName + ", " + otherStudent.lastName;
+    document.querySelector("#onlytwoprefects .student1").textContent = prefectA.firstName + " " + prefectA.lastName;
+    document.querySelector("#onlytwoprefects .student2").textContent = prefectB.firstName + " " + prefectB.lastName;
 
     function closeDialog() {
-      document.querySelector("#onlyonekind").classList.add("hidden");
+      document.querySelector("#onlytwoprefects").classList.add("hidden");
       // its good practice to remove event listener if u dont need it anymore
-      document.querySelector("#onlyonekind .closeButton").removeEventListener("click", closeDialog);
-      document.querySelector("#onlyonekind [data-action=remove1]").removeEventListener("click", clickRemoveOther);
+      document.querySelector("#onlytwoprefects .closeButton").removeEventListener("click", closeDialog);
+      document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
+      document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
     }
 
-    function clickRemoveOther() {
-      removePrefect(otherStudent);
+    function clickRemoveA() {
+      removePrefect(prefectA);
       makePrefect(selectedStudent);
       buildList();
       closeDialog();
     }
-  }
 
-  function removePrefectAorB() {
-    console.log("remove prefectA or prefectB");
-    document.querySelector("#onlytwoprefect").classList.remove("hidden");
-    document.querySelector("#onlytwoprefect .closebutton").addEventListener("click", closeDialog);
-    document.querySelector("#onlytwoprefect [data-action=remove1]").addEventListener("click", clickRemoveA);
-    document.querySelector("#onlytwoprefect [data-action=remove2]").addEventListener("click", clickRemoveB);
-
-    // show names on buttons
-    document.querySelector("#onlytwoprefect .prefect1").textContent = prefectA.firstName + ", " + prefectA.lastName;
-    document.querySelector("#onlytwoprefect .prefect2").textContent = prefectB.firstName + ", " + prefectA.lastName;
-  }
-
-  function closeDialog() {
-    document.querySelector("#onlytwoprefects").classList.add("hidden");
-    // its good practice to remove event listener if u dont need it anymore
-    document.querySelector("#onlytwoprefects .closeButton").removeEventListener("click", closeDialog);
-    document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
-    document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
-  }
-
-  function clickRemoveA() {
-    removeWinner(winnerA);
-    makeWinner(selectedAnimal);
-    buildList();
-    closeDialog();
-  }
-
-  function clickRemoveB() {
-    removePrefect(prefectB);
-    makePrefect(selectedStudent);
-    buildList();
-    closeDialog();
+    function clickRemoveB() {
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
   }
 
   function removePrefect(prefectStudent) {
@@ -275,7 +313,7 @@ function tryToMakeWinner(selectedStudent) {
 
 // filtering house
 function filterList(house) {
-  let list = allStudents.filter(isStudentHouse);
+  let list = activeStudents.filter(isStudentHouse);
   function isStudentHouse(student) {
     if (student.house === house) {
       return true;
@@ -285,7 +323,7 @@ function filterList(house) {
   }
 
   if (list.length === 0) {
-    list = allStudents;
+    list = activeStudents;
   }
   filteredArray = list;
   // console.table(filteredArray);
@@ -373,45 +411,14 @@ function expellStudent(expelledStudent) {
 
   let index = activeStudents.indexOf(expelledStudent);
   if (index > -1) {
-    allStudents.splice(index, 1);
     activeStudents.splice(index, 1);
     expelledStudents.push(expelledStudent);
   }
 
-  console.log(activeStudents);
   buildList();
-
-  // let expelledStudents = allStudents.splice(index, 1);
-  // console.log("allstudents length: ", allStudents.length);
-  // console.log("new expelled Student: ", expelledStudents);
-
-  // doesnt work adds random ammount of people to new list after expelling more than 1 student
-  // newList.push(expelledStudents);
-
-  // console.log("what is this: ", newList);
-  // newList = allStudents.filter((student) => student.expelled);
-  // console.log("new List is ", newList);
-  // const otherList = allStudents.filter((student) => student.expelled === true);
-
-  // console.log("expelled student is ", expelled);
-
-  // buildList();
-  // displayExpelledStudents(newList);
-  // document.querySelector("[data-filter=expelled]").addEventListener("click", displayExpelledStudents);
-  // function displayExpelledStudents() {
-  //   allStudents.filter(buildList(newList));
-  // }
-}
-
-function filterExpelledList(isExpelled) {
-  console.log("is expelled?", isExpelled);
-  allStudents.forEach((student) => console.log(student.expelled == isExpelled));
-  let filteredList = allStudents.filter((student) => String(student.expelled) == isExpelled);
-  console.log("filtered list", filteredList);
-  return filteredList;
 }
 
 function buildList() {
-  const currentList = allStudents;
+  const currentList = activeStudents;
   displayList(currentList);
 }

@@ -201,6 +201,18 @@ function displayStudent(alumni) {
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
   //   console.table(alumni);
+
+  // about interface || number of students in each house
+  const gryffindor = activeStudents.filter((student) => student.house === "Gryffindor");
+  document.querySelector("[data-filter=Gryffindor]").textContent = "🦁Gryffindor" + `(${gryffindor.length})`;
+
+  const hufflepuff = activeStudents.filter((student) => student.house === "Hufflepuff");
+  document.querySelector("[data-filter=Hufflepuff]").textContent = "🦡Hufflepuff" + `(${hufflepuff.length})`;
+  const ravenclaw = activeStudents.filter((student) => student.house === "Ravenclaw");
+  document.querySelector("[data-filter=Ravenclaw]").textContent = "🦅Ravenclaw" + `(${ravenclaw.length})`;
+  const slytherin = activeStudents.filter((student) => student.house === "Slytherin");
+  document.querySelector("[data-filter=Slytherin]").textContent = "🐍Slytherin" + `(${slytherin.length})`;
+  // document.querySelector("[data-filter=Hufflepuff]").textContent = "🦡Hufflepuff" + `(${activeStudents.length})`;
 }
 
 function tryToMakePrefect(selectedStudent) {
@@ -407,7 +419,6 @@ function expellStudent(expelledStudent) {
   document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
   document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
   document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
-  alert(`${expelledStudent.firstName} has been expelled!`);
   document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
 
   let index = activeStudents.indexOf(expelledStudent);

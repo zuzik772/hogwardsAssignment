@@ -26,11 +26,16 @@ h1 {
   margin: 0 auto;
 }
 
+/* h2 {
+  font-family: "Josefin Sans", sans-serif;
+} */
+
 nav p,
 button {
   color: orange;
 }
 
+button[data-action="remove"],
 li {
   list-style: none;
   font-size: 1.1rem;

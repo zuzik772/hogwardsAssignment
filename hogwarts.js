@@ -233,7 +233,7 @@ function tryToMakePrefect(selectedStudent) {
   const numberOfOthers = other.length;
 
   console.log("other student is", other);
-  if (selectedStudent.expelled === false) {
+  if (selectedStudent.prefect === false) {
     if (numberOfOthers >= 2) {
       console.log("you can have only 2 prefects from 1 house", other);
       // removeOtherStudent(other);
@@ -298,7 +298,6 @@ function tryToMakePrefect(selectedStudent) {
       makePrefect(selectedStudent);
       buildList();
       closeDialog();
-      prefects.length--;
     }
 
     function clickRemoveB() {
@@ -306,12 +305,12 @@ function tryToMakePrefect(selectedStudent) {
       makePrefect(selectedStudent);
       buildList();
       closeDialog();
-      prefects.length--;
     }
   }
 
   function removePrefect(prefectStudent) {
     prefectStudent.prefect = false;
+    prefects.length--;
   }
   function makePrefect(student) {
     student.prefect = true;

@@ -56,13 +56,17 @@ function start() {
   const sortBtns = document.querySelectorAll("[data-action=sort]");
   sortBtns.forEach((sortBtn) => {
     sortBtn.addEventListener("click", function () {
-      // sortBtn.style.backgroundColor = "yellow";
       if (settings.isSortDir === true) {
         settings.isSortDir = false;
+        // sortBtn.style.color = "orange";
+        // sortBtn.textContent = "👇" + this.dataset.sort;
+
         console.log("its false");
         sortList(filteredArray, this.dataset.sort, "asc");
       } else {
         settings.isSortDir = true;
+        // sortBtn.style.color = "red";
+        // sortBtn.textContent = "👆" + this.dataset.sort;
         console.log("its true");
         sortList(filteredArray, this.dataset.sort, "desc");
       }

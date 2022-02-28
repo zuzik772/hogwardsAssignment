@@ -40,6 +40,7 @@ li {
 button {
   background-color: rgb(41, 41, 41);
 }
+thead,
 input,
 button:hover:not([data-action="remove"]) {
   background-color: rgb(15, 15, 15);
@@ -52,9 +53,27 @@ img {
 table {
   margin: 0 auto;
 }
-[data-field="status"] {
+/* [data-field="status"] {
   padding-right: 3rem;
+} */
+
+th {
+  color: rgb(47, 192, 47);
+  padding: 5px 10px;
+  /* width: 100px; */
 }
+th:hover {
+  color: rgb(148, 253, 148);
+}
+
+td.popup {
+  text-align: center;
+}
+/* 
+tbody tr {
+  color: rgb(0, 0, 0);
+} */
+
 tbody tr:hover {
   color: orange;
   outline: 2px solid orange;

@@ -193,7 +193,7 @@ function displayStudent(alumni) {
   }
   //display prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = alumni.prefect;
-
+    document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
   // student click
   let studentBtn = clone.querySelectorAll("td.popup");
   studentBtn.forEach((btn) => {
@@ -245,6 +245,7 @@ function tryToMakePrefect(selectedStudent) {
   const numberOfOthers = other.length;
 
   if (selectedStudent.prefect === false) {
+    
     if (numberOfOthers >= 2) {
       console.log("you can have only 2 prefects from 1 house", other);
       removePrefectAorB(other[0], other[1]);

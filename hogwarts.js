@@ -199,8 +199,7 @@ function displayStudent(alumni) {
   document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
   // display squad
   clone.querySelector("[data-field=squad]").dataset.squad = alumni.squad;
-  document.querySelector("[data-filter=squad]").textContent = "Inquisitorial Squad";
-  // + `(${allSquadMembers.length})`;
+  document.querySelector("[data-filter=squad]").textContent = "Inquisitorial Squad" + `(${allSquadMembers.length})`;
   // student click
   let studentBtn = clone.querySelectorAll("td.showPopup");
   studentBtn.forEach((btn) => {
@@ -215,7 +214,8 @@ function displayStudent(alumni) {
     if (alumni.prefect === true) {
       alumni.prefect = false;
       const index = allPrefects.indexOf(alumni);
-      allPrefects.splice(index, 1), (document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`);
+      allPrefects.splice(index, 1);
+      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
 
       console.log("make false");
     } else {
@@ -228,17 +228,24 @@ function displayStudent(alumni) {
   // Inquisitorial squad click
   clone.querySelector("[data-field=squad]").addEventListener("click", squadClick);
   function squadClick() {
-    if (alumni.squad === true) {
-      alumni.squad = false;
-      // const index = allPrefects.indexOf(alumni);
-      // allPrefects.splice(index, 1), (document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`);
+    if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
+      if (alumni.squad === true) {
+        alumni.squad = false;
+        const index = allSquadMembers.indexOf(alumni);
+        allSquadMembers.splice(index, 1);
+        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
 
-      console.log("make false");
+        console.log("make false");
+      } else {
+        alumni.squad = true;
+        allSquadMembers.push(alumni);
+        console.log("make true");
+      }
     } else {
-      alumni.squad = true;
-      console.log("make true");
+      console.log("not a pure blood student");
+      document.querySelector("#squad").classList.remove("hidden");
+      document.querySelector("#squad").addEventListener("click", closeMessage);
     }
-
     buildList();
   }
   // append clone to list
@@ -471,3 +478,9 @@ function defineBloodStatus(alumni) {
     alumni.blood = "muggle";
   }
 }
+
+// squad close message popup
+      function closeMessage() {
+        document.querySelector("#squad").classList.add("hidden");
+        document.querySelector("#squad").removeEventListener("click", closeMessage);
+      }

@@ -85,6 +85,7 @@ tbody tr:hover {
   outline: 2px solid orange;
   border-radius: 25px;
 }
+#squad,
 #studentPopUp,
 #onlytwoprefects,
 #onlyonekind {
@@ -98,7 +99,7 @@ tbody tr:hover {
   justify-content: center;
   /* pointer-events: none; */
 }
-
+#squad .message,
 #studentPopUp .content,
 #onlytwoprefects .dialogcontent {
   position: relative;
@@ -106,22 +107,19 @@ tbody tr:hover {
   height: fit-content;
   padding: 2rem;
   border-radius: 25px;
-  background-color: #cc1c16;
+  background-color: #e5c3c2;
 }
+button.closeButton,
 button.closebutton {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
 }
-
+#squad.hidden,
 #studentPopUp.hidden,
 #onlytwoprefects.hidden,
 #onlyonekind.hidden {
   display: none;
-}
-
-.dialogcontent {
-  background-color: salmon;
 }
 
 .flex {

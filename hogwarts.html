@@ -19,26 +19,28 @@
   <body>
     <h1>Hogwarts School of Witchcraft and Wizardry</h1>
 
-    <p>
-      Filter 🎓Students:
-      <button class="filter" data-action="filterStudent" data-filter="enrolled">✅Enrolled Students</button>
-      <button class="filter" data-action="filterStudent" data-filter="expelled">❌Expelled Students</button>
-      <button class="filter" data-action="filterStudent" data-filter="all">🎓All Students</button>
-    </p>
-    <p>
-      Filter 🏰House:
-      <button class="filter" data-action="filterHouse" data-filter="Gryffindor">🦁Gryffindor</button>
-      <button class="filter" data-action="filterHouse" data-filter="Hufflepuff">🦡Hufflepuff</button>
-      <button class="filter" data-action="filterHouse" data-filter="Ravenclaw">🦅Ravenclaw</button>
-      <button class="filter" data-action="filterHouse" data-filter="Slytherin">🐍Slytherin</button>
-    </p>
-    <p>
-      Filter Responsabilities:
-      <button class="filter" data-action="filter" data-filter="captains">Captains</button>
-      <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
-      <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button>
-    </p>
-    <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
+    <nav>
+      <p>
+        Filter 🎓Students:
+        <button class="filter" data-action="filterStudent" data-filter="enrolled">✅Enrolled Students</button>
+        <button class="filter" data-action="filterStudent" data-filter="expelled">❌Expelled Students</button>
+        <button class="filter" data-action="filterStudent" data-filter="all">🎓All Students</button>
+      </p>
+      <p>
+        Filter 🏰House:
+        <button class="filter" data-action="filterHouse" data-filter="Gryffindor">🦁Gryffindor</button>
+        <button class="filter" data-action="filterHouse" data-filter="Hufflepuff">🦡Hufflepuff</button>
+        <button class="filter" data-action="filterHouse" data-filter="Ravenclaw">🦅Ravenclaw</button>
+        <button class="filter" data-action="filterHouse" data-filter="Slytherin">🐍Slytherin</button>
+      </p>
+      <p>
+        Filter Responsabilities:
+        <button class="filter" data-action="filter" data-filter="captains">Captains</button>
+        <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
+        <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button>
+      </p>
+      <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
+    </nav>
 
     <hr />
 
@@ -80,17 +82,21 @@
       <div class="content">
         <button class="closebutton">X</button>
         <h2>Hogwarts School of Witchcraft and Wizardry</h2>
-        <ul>
+        <ul class="grid">
           <li class="image"><img src="" alt="" /></li>
-          <li class="firstname">First name</li>
-          <li class="middlename">Middle name</li>
-          <li class="nickname">Nick name</li>
-          <li class="lastname">Last name</li>
-          <!-- <li class="image"><img src="" alt="" /></li> -->
-          <li class="house">House Crest</li>
-          <li class="blood">Blood-status</li>
-          <li class="prefect">Prefect - status:</li>
-          <li class="characteristics">additional characteristics</li>
+          <div>
+            <div class="flex">
+              <li class="firstname">First name</li>
+              <li class="middlename">Middle name</li>
+              <li class="nickname">Nick name</li>
+              <li class="lastname">Last name</li>
+            </div>
+            <!-- <li class="image"><img src="" alt="" /></li> -->
+            <li class="house">House Crest</li>
+            <li class="blood">Blood-status</li>
+            <li class="prefect">Prefect - status:</li>
+            <li class="characteristics">additional characteristics</li>
+          </div>
         </ul>
 
         <p>
@@ -111,14 +117,14 @@
       </div>
     </div>
 
-    <div id="onlyonekind" class="hidden">
+    <!-- <div id="onlyonekind" class="hidden">
       <div class="dialogcontent">
         <button class="closeButton">close</button>
         <h3>You can only have one prefect from each house</h3>
         <h4>Remove the other if you want to appoint a new one</h4>
         <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
       </div>
-    </div>
+    </div> -->
 
     <script src="hogwarts.js"></script>
   </body>

@@ -35,7 +35,7 @@
       </p>
       <p>
         Filter Responsabilities:
-        <button class="filter" data-action="filter" data-filter="captains">Captains</button>
+        <button class="filter" data-action="filter" data-filter="squad">Inquisitorial Squad</button>
         <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
         <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button>
       </p>
@@ -49,6 +49,7 @@
       <thead>
         <tr>
           <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="squad">Squad</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
@@ -66,16 +67,17 @@
     <template id="alumni">
       <tr>
         <td data-field="prefect" data-prefect="false"></td>
-        <td class="popup" data-field="image"><img src="" alt="" /></td>
-        <td class="popup" data-field="firstName">FIRST NAME</td>
-        <td class="popup" data-field="lastName">LAST NAME</td>
-        <td class="popup" data-field="middleName">MIDDLE NAME</td>
-        <td class="popup" data-field="nickName">NICK NAME</td>
+        <td data-field="squad" data-prefect="false"></td>
+        <td class="showPopup" data-field="image"><img src="" alt="" /></td>
+        <td class="showPopup" data-field="firstName">FIRST NAME</td>
+        <td class="showPopup" data-field="lastName">LAST NAME</td>
+        <td class="showPopup" data-field="middleName">MIDDLE NAME</td>
+        <td class="showPopup" data-field="nickName">NICK NAME</td>
         <!-- <td class="popup" data-field="image"><img src="" alt="" /></td> -->
-        <td class="popup" data-field="gender">GENDER</td>
-        <td class="popup" data-field="house">HOUSE</td>
-        <td class="popup" data-field="blood">BLOOD STATUS</td>
-        <td class="popup" data-field="status">STATUS</td>
+        <td class="showPopup" data-field="gender">GENDER</td>
+        <td class="showPopup" data-field="house">HOUSE</td>
+        <td class="showPopup" data-field="blood">BLOOD STATUS</td>
+        <td class="showPopup" data-field="status">STATUS</td>
       </tr>
     </template>
 
@@ -96,6 +98,7 @@
             <li class="house">House Crest</li>
             <li class="blood">Blood-status</li>
             <li class="prefect">Prefect - status:</li>
+            <li class="prefect">Squad - status:</li>
             <li class="characteristics">additional characteristics</li>
           </div>
         </ul>

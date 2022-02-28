@@ -16,6 +16,7 @@
 } */
 body {
   background-color: rgb(56, 56, 56);
+  background-color: #004d40;
 }
 h1 {
   font-size: 2.5rem;
@@ -150,5 +151,17 @@ td[data-field="prefect"]::after {
 
 td[data-field="prefect"][data-prefect="false"]::after {
   content: "📛";
+  filter: grayscale(1);
+}
+
+td[data-field="squad"]::after {
+  content: "🎖️";
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+td[data-field="squad"][data-prefect="false"]::after {
+  content: "🎖️";
   filter: grayscale(1);
 }

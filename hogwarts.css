@@ -147,11 +147,13 @@ td[data-field="prefect"]::after {
   display: block;
   width: fit-content;
   margin: 0 auto;
+  transform: scale(1.5);
 }
 
 td[data-field="prefect"][data-prefect="false"]::after {
   content: "📛";
   filter: grayscale(1);
+  transform: scale(1.5);
 }
 
 td[data-field="squad"]::after {
@@ -159,9 +161,11 @@ td[data-field="squad"]::after {
   display: block;
   width: fit-content;
   margin: 0 auto;
+  transform: scale(1.5);
 }
 
-td[data-field="squad"][data-prefect="false"]::after {
+td[data-field="squad"][data-squad="false"]::after {
   content: "🎖️";
   filter: grayscale(1);
+  transform: scale(1.5);
 }

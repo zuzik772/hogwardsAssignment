@@ -228,17 +228,16 @@ function displayStudent(alumni) {
   // Inquisitorial squad click
   clone.querySelector("[data-field=squad]").addEventListener("click", squadClick);
   function squadClick() {
-    console.log("click squad");
-    // if (alumni.squad === true) {
-    //   alumni.prefect = false;
-    //   const index = allPrefects.indexOf(alumni);
-    //   allPrefects.splice(index, 1), (document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`);
+    if (alumni.squad === true) {
+      alumni.squad = false;
+      // const index = allPrefects.indexOf(alumni);
+      // allPrefects.splice(index, 1), (document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`);
 
-    //   console.log("make false");
-    // } else {
-    //   tryToMakePrefect(alumni);
-    //   console.log("make true");
-    // }
+      console.log("make false");
+    } else {
+      alumni.squad = true;
+      console.log("make true");
+    }
 
     buildList();
   }

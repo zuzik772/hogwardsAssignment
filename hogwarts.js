@@ -2,11 +2,13 @@
 window.addEventListener("DOMContentLoaded", start);
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
-
+let halfBlood = [];
+let pureBlood = [];
 let allStudents = [];
 let filteredArray;
 let expelledStudents = [];
 let activeStudents = [];
+let allPrefects = [];
 const Student = {
   firstName: "",
   lastName: "",
@@ -42,11 +44,9 @@ function start() {
         console.log("this dataset filter is", this.dataset.filter);
       } else if (this.dataset.filter === "expelled") {
         displayList(expelledStudents);
-        // displayList(filterExpelledList(expelledStudents));
         console.log("i am empty", expelledStudents);
       } else if (this.dataset.filter === "enrolled") {
         displayList(activeStudents);
-        // displayList(filterExpelledList(expelledStudents));
         console.log("i am active", activeStudents);
       }
     });
@@ -75,16 +75,33 @@ function start() {
     });
   });
 
-  loadJson();
+  loadJson1();
 }
 
-function loadJson() {
-  fetch(url)
-    .then((response) => response.json())
-    .then((allStudentData) => allStudentData.forEach(prepareObjects));
+async function loadJson1() {
+  const resp = await fetch(urlBlood);
+  const data = await resp.json();
+  console.log("1");
+  halfBlood = data.half;
+  pureBlood = data.pure;
+
+  loadJson2();
 }
 
-function prepareObjects(studentObject) {
+async function loadJson2() {
+  const resp = await fetch(url);
+  const data = await resp.json();
+  console.log("2");
+  prepareObjects(data);
+}
+
+function prepareObjects(jsonData) {
+  allStudents = jsonData.map(prepareObject);
+
+  buildList();
+}
+
+function prepareObject(studentObject) {
   filteredArray = allStudents;
   let fullname = studentObject.fullname.trim();
   let newFullname = capitalization(fullname);
@@ -105,9 +122,6 @@ function prepareObjects(studentObject) {
   student.house = newHouse;
   let studentGender = studentObject.gender;
   student.gender = studentGender;
-
-  let studentBlood = studentObject.half;
-  student.blood = studentBlood;
 
   allStudents.push(student);
   activeStudents.push(student);
@@ -169,7 +183,9 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=gender]").textContent = alumni.gender;
   clone.querySelector("[data-field=house]").textContent = alumni.house;
   clone.querySelector("[data-field=blood]").textContent = alumni.blood;
-  // clone.querySelector("[data-field=status]").textContent = alumni.expelled;
+  // BLOOD STATUS
+  defineBloodStatus(alumni);
+  // EXPELL STATUS
   if (alumni.expelled) {
     clone.querySelector("[data-field=status]").textContent = "expelled";
   } else {
@@ -190,15 +206,12 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=prefect]").addEventListener("click", prefectClick);
   function prefectClick() {
     if (alumni.prefect === true) {
-      // alumni.prefect = false;
       alumni.prefect = false;
-
-      const prefects = activeStudents.filter((student) => student.prefect);
-      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${prefects.length})`;
+      const index = allPrefects.indexOf(alumni);
+      allPrefects.splice(index, 1), (document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`);
 
       console.log("make false");
     } else {
-      // alumni.prefect = true;
       tryToMakePrefect(alumni);
       console.log("make true");
     }
@@ -223,14 +236,6 @@ function displayStudent(alumni) {
   document.querySelector("[data-filter=enrolled]").textContent = "✅Enrolled Students" + `(${activeStudents.length})`;
   document.querySelector("[data-filter=expelled]").textContent = "❌Expelled Students" + `(${expelledStudents.length})`;
   document.querySelector("[data-filter=all]").textContent = "🎓All Students" + `(${allStudents.length})`;
-
-  // if ("[data-filter=all]") {
-  //   document.querySelector(".numberOfDisplayedStudents").textContent = "Number of currently displayed students:" + `(${allStudents.length})`;
-  // } else if ("[data-filter=expelled]") {
-  //   document.querySelector(".numberOfDisplayedStudents").textContent = "Number of currently displayed students:" + `(${expelledStudents.length})`;
-  // } else if ("[data-filter=enrolled]") {
-  //   document.querySelector(".numberOfDisplayedStudents").textContent = "Number of currently displayed students:" + `(${activeStudents.length})`;
-  // }
 }
 
 function tryToMakePrefect(selectedStudent) {
@@ -239,29 +244,21 @@ function tryToMakePrefect(selectedStudent) {
   const other = prefects.filter((student) => student.house === selectedStudent.house);
   const numberOfOthers = other.length;
 
-  console.log("other student is", other);
   if (selectedStudent.prefect === false) {
     if (numberOfOthers >= 2) {
       console.log("you can have only 2 prefects from 1 house", other);
-      // removeOtherStudent(other);
       removePrefectAorB(other[0], other[1]);
       //  Display number of prefects
-      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${prefects.length})`;
+      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
     } else {
       makePrefect(selectedStudent);
-      prefects.length++;
-      //  Display number of prefects
-      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${prefects.length})`;
     }
+    console.log("other student is", other);
   }
-
-  console.log("prefect student is", prefects);
 
   function removePrefectAorB(prefectA, prefectB) {
     console.log("remove prefectA or prefectB");
     document.querySelector("#onlytwoprefects").classList.remove("hidden");
-    // document.querySelector("#onlytwoprefects .closeButton").addEventListener("click", closeDialog);
-
     document.querySelector("#onlytwoprefects [data-action=remove1]").addEventListener("click", clickRemoveA);
     document.querySelector("#onlytwoprefects [data-action=remove2]").addEventListener("click", clickRemoveB);
 
@@ -272,8 +269,6 @@ function tryToMakePrefect(selectedStudent) {
     function closeDialog() {
       document.querySelector("#onlytwoprefects").classList.add("hidden");
       // its good practice to remove event listener if u dont need it anymore
-
-      // document.querySelector("#onlytwoprefects .closeButton").removeEventListener("click", closeDialog);
       document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
       document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
     }
@@ -295,10 +290,19 @@ function tryToMakePrefect(selectedStudent) {
 
   function removePrefect(prefectStudent) {
     prefectStudent.prefect = false;
-    prefects.length--;
+    // prefects.length--;
+    const index = allPrefects.indexOf(prefectStudent);
+    allPrefects.splice(index, 1);
+    buildList();
   }
   function makePrefect(student) {
     student.prefect = true;
+
+    allPrefects.push(student);
+    buildList();
+    document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
+    console.log("prefect student is", allPrefects);
+    console.log("prefect student is", prefects);
   }
 }
 
@@ -434,4 +438,14 @@ function expellStudent(expelledStudent) {
 function buildList() {
   const currentList = activeStudents;
   displayList(currentList);
+}
+
+// blood
+
+function defineBloodStatus(alumni) {
+  if (halfBlood.includes(alumni.lastName)) {
+    alumni.blood = "half blood";
+  } else if (pureBlood.includes(alumni.lastName)) {
+    alumni.blood = "pure blood";
+  }
 }

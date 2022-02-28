@@ -190,10 +190,17 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=prefect]").addEventListener("click", prefectClick);
   function prefectClick() {
     if (alumni.prefect === true) {
+      // alumni.prefect = false;
       alumni.prefect = false;
+
+      const prefects = activeStudents.filter((student) => student.prefect);
+      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${prefects.length})`;
+
+      console.log("make false");
     } else {
       // alumni.prefect = true;
       tryToMakePrefect(alumni);
+      console.log("make true");
     }
 
     buildList();
@@ -248,30 +255,8 @@ function tryToMakePrefect(selectedStudent) {
     }
   }
 
-  // function removeOtherStudent(otherStudent) {
-  //   console.log("remove other student");
-  //   document.querySelector("#onlyonekind").classList.remove("hidden");
-  //   document.querySelector("#onlyonekind .closeButton").addEventListener("click", closeDialog);
-  //   document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
-  //   document.querySelector("#onlyonekind [data-action=remove1]").addEventListener("click", clickRemoveOther);
-  //   // show names on buttons
-  //   document.querySelector("#onlyonekind .student1").textContent = otherStudent.firstName + ", " + otherStudent.lastName;
-
-  //   function closeDialog() {
-  //     document.querySelector("#onlyonekind").classList.add("hidden");
-  //     // its good practice to remove event listener if u dont need it anymore
-  //     document.querySelector("#onlyonekind .closeButton").removeEventListener("click", closeDialog);
-  //     document.querySelector("#onlyonekind [data-action=remove1]").removeEventListener("click", clickRemoveOther);
-  //   }
-
-  //   function clickRemoveOther() {
-  //     removePrefect(otherStudent);
-  //     makePrefect(selectedStudent);
-  //     buildList();
-  //     closeDialog();
-  //   }
-  // }
   console.log("prefect student is", prefects);
+
   function removePrefectAorB(prefectA, prefectB) {
     console.log("remove prefectA or prefectB");
     document.querySelector("#onlytwoprefects").classList.remove("hidden");

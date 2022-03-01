@@ -54,6 +54,16 @@ function start() {
     });
   });
 
+  // click filter prefect
+  document.querySelector("[data-filter=prefects]").addEventListener("click", function () {
+    displayList(allPrefects);
+  });
+
+  // click filter squad
+  document.querySelector("[data-filter=squad]").addEventListener("click", function () {
+    displayList(allSquadMembers);
+  });
+
   // click sort for evrything
   const sortBtns = document.querySelectorAll("[data-action=sort]");
   sortBtns.forEach((sortBtn) => {
@@ -206,6 +216,7 @@ function displayStudent(alumni) {
   //display prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = alumni.prefect;
   document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
+
   // display squad
   clone.querySelector("[data-field=squad]").dataset.squad = alumni.squad;
   document.querySelector("[data-filter=squad]").textContent = "🎖️Inquisitorial Squad" + `(${allSquadMembers.length})`;

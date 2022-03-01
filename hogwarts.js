@@ -463,12 +463,19 @@ function prefectClick(alumni) {
 // blood
 
 function defineBloodStatus(alumni) {
-  if (halfBlood.includes(alumni.lastName)) {
-    alumni.blood = "half blood";
-  } else if (pureBlood.includes(alumni.lastName)) {
-    alumni.blood = "pure blood";
-  } else {
-    alumni.blood = "muggle";
+  if (isHacked === true) {
+    console.log("its hacking time");
+    // Former pure-bloods will get completely random blood-status, whereas half- and muggle-bloods will be listed as pure-blood.
+    // If you can randomly modify the former pure - bloods on every redisplay(sort or filter) of the list, the better!
+  } else if (isHacked === false) {
+    // ORIGINAL FUNCTION
+    if (halfBlood.includes(alumni.lastName)) {
+      alumni.blood = "half blood";
+    } else if (pureBlood.includes(alumni.lastName)) {
+      alumni.blood = "pure blood";
+    } else {
+      alumni.blood = "muggle";
+    }
   }
 }
 

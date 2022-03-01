@@ -508,3 +508,26 @@ function squadClick(alumni) {
   }
   buildList();
 }
+
+// HACKING
+// task1 create objectMe and then add it to array and build list
+// task3 system is hacked = true ... big global flag so we know system is hacked
+// task 3 continue.. if the hack is on than add the timer which removes the inq squad property from the object
+// task 2 mess up blood status in the loop by some rules
+function hackTheSystem() {
+  const hacker = Object.create(Student);
+  hacker.firstName = "Zuzana";
+  hacker.nickName = "Zuz";
+  hacker.lastName = "Chudinova";
+  hacker.image = "zuz.png";
+  hacker.gender = "girl";
+  hacker.house = "KEA";
+  hacker.expelled = false;
+  hacker.prefect = true;
+  hacker.blood = "pure blood";
+  hacker.squad = true;
+  console.log("hacker", hacker);
+  activeStudents.push(hacker);
+  console.log("hacked list", activeStudents);
+  buildList();
+}

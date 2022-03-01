@@ -76,7 +76,6 @@ function start() {
       // sortList(filteredArray, this.dataset.sort);
     });
   });
-
   loadJson1();
 }
 
@@ -135,7 +134,6 @@ function buildList() {
   displayList(currentList);
 }
 
-
 function capitalization(fullname) {
   fullname = fullname.toLowerCase();
   let fullnameArray = fullname.split("");
@@ -179,6 +177,7 @@ function displayList(students) {
 }
 
 function displayStudent(alumni) {
+  displayNumberOfStudentsInHouse();
   // create clone
   const clone = document.querySelector("template#alumni").content.cloneNode(true);
 
@@ -219,22 +218,9 @@ function displayStudent(alumni) {
     });
   });
   // prefect click
-  clone.querySelector("[data-field=prefect]").addEventListener("click", prefectClick);
-  function prefectClick() {
-    if (alumni.prefect === true) {
-      alumni.prefect = false;
-      const index = allPrefects.indexOf(alumni);
-      allPrefects.splice(index, 1);
-      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
-
-      console.log("make false");
-    } else {
-      tryToMakePrefect(alumni);
-      console.log("make true");
-    }
-
-    buildList();
-  }
+  clone.querySelector("[data-field=prefect]").addEventListener("click", function () {
+    prefectClick(alumni);
+  });
   // Inquisitorial squad click
   clone.querySelector("[data-field=squad]").addEventListener("click", function () {
     squadClick(alumni);
@@ -242,22 +228,6 @@ function displayStudent(alumni) {
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
-  //   console.table(alumni);
-
-  // About interface || number of students in each house
-  const gryffindor = activeStudents.filter((student) => student.house === "Gryffindor");
-  document.querySelector("[data-filter=Gryffindor]").textContent = "🦁Gryffindor" + `(${gryffindor.length})`;
-
-  const hufflepuff = activeStudents.filter((student) => student.house === "Hufflepuff");
-  document.querySelector("[data-filter=Hufflepuff]").textContent = "🦡Hufflepuff" + `(${hufflepuff.length})`;
-  const ravenclaw = activeStudents.filter((student) => student.house === "Ravenclaw");
-  document.querySelector("[data-filter=Ravenclaw]").textContent = "🦅Ravenclaw" + `(${ravenclaw.length})`;
-  const slytherin = activeStudents.filter((student) => student.house === "Slytherin");
-  document.querySelector("[data-filter=Slytherin]").textContent = "🐍Slytherin" + `(${slytherin.length})`;
-  //  Display number of students active, expelled and all students
-  document.querySelector("[data-filter=enrolled]").textContent = "✅Enrolled Students" + `(${activeStudents.length})`;
-  document.querySelector("[data-filter=expelled]").textContent = "❌Expelled Students" + `(${expelledStudents.length})`;
-  document.querySelector("[data-filter=all]").textContent = "🎓All Students" + `(${allStudents.length})`;
 }
 
 function tryToMakePrefect(selectedStudent) {
@@ -362,27 +332,59 @@ function sortList(arr, propertyName, direction) {
   displayList(list);
 }
 
+// number of student in each house
+function displayNumberOfStudentsInHouse() {
+  // About interface || number of students in each house
+  const gryffindor = activeStudents.filter((student) => student.house === "Gryffindor");
+  document.querySelector("[data-filter=Gryffindor]").textContent = "🦁Gryffindor" + `(${gryffindor.length})`;
+
+  const hufflepuff = activeStudents.filter((student) => student.house === "Hufflepuff");
+  document.querySelector("[data-filter=Hufflepuff]").textContent = "🦡Hufflepuff" + `(${hufflepuff.length})`;
+  const ravenclaw = activeStudents.filter((student) => student.house === "Ravenclaw");
+  document.querySelector("[data-filter=Ravenclaw]").textContent = "🦅Ravenclaw" + `(${ravenclaw.length})`;
+  const slytherin = activeStudents.filter((student) => student.house === "Slytherin");
+  document.querySelector("[data-filter=Slytherin]").textContent = "🐍Slytherin" + `(${slytherin.length})`;
+  //  Display number of students active, expelled and all students
+  document.querySelector("[data-filter=enrolled]").textContent = "✅Enrolled Students" + `(${activeStudents.length})`;
+  document.querySelector("[data-filter=expelled]").textContent = "❌Expelled Students" + `(${expelledStudents.length})`;
+  document.querySelector("[data-filter=all]").textContent = "🎓All Students" + `(${allStudents.length})`;
+}
+
 // search function
+// function searchFunction() {
+//   // Declare variables
+//   let input, filter, table, tr, td, i, txtValue;
+//   input = document.querySelector("#searchInput");
+//   filter = input.value.toUpperCase();
+//   table = document.querySelector("#list");
+//   tr = table.getElementsByTagName("tr");
+
+//   // Loop through all table rows, and hide those who don't match the search query
+//   for (i = 0; i < tr.length; i++) {
+//     td = tr[i].getElementsByTagName("td")[3];
+//     if (td) {
+//       txtValue = td.textContent || td.innerText;
+//       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//         tr[i].style.display = "";
+//       } else {
+//         tr[i].style.display = "none";
+//       }
+//     }
+//   }
+// }
+
 function searchFunction() {
   // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("searchInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("list");
-  tr = table.getElementsByTagName("tr");
+
+  input = document.querySelector("#searchInput");
+  const searchStr = input.value.toUpperCase();
+  const searchedStudents = activeStudents.filter((student) => {
+    return student.firstName.toUpperCase().includes(searchStr) || student.lastName.toUpperCase().includes(searchStr);
+  });
+  displayList(searchedStudents);
+  // console.log(searchedStudents);
 
   // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
 }
 
 function showPopUp(student) {
@@ -449,6 +451,23 @@ function expellStudent(expelledStudent) {
   if (index > -1) {
     activeStudents.splice(index, 1);
     expelledStudents.push(expelledStudent);
+  }
+
+  buildList();
+}
+
+// prefect
+function prefectClick(alumni) {
+  if (alumni.prefect === true) {
+    alumni.prefect = false;
+    const index = allPrefects.indexOf(alumni);
+    allPrefects.splice(index, 1);
+    document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
+
+    console.log("make false");
+  } else {
+    tryToMakePrefect(alumni);
+    console.log("make true");
   }
 
   buildList();

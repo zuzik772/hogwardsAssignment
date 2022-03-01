@@ -50,14 +50,15 @@ main {
   justify-content: flex-start;
 }
 aside {
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   flex-direction: column;
   width: 200px;
+  width: fit-content;
 }
 
 table {
-  margin-left: 200px;
+  /* margin-left: 200px; */
   background-color: #ffffff;
 }
 
@@ -99,7 +100,7 @@ th {
   width: 100px;
 }
 th:hover {
-  color: rgb(148, 253, 148);
+  color: orange;
 }
 
 td.popup {

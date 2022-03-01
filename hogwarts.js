@@ -362,29 +362,6 @@ function displayNumberOfStudentsInHouse() {
   document.querySelector("[data-filter=all]").textContent = "🎓All Students" + `(${allStudents.length})`;
 }
 
-// search function
-// function searchFunction() {
-//   // Declare variables
-//   let input, filter, table, tr, td, i, txtValue;
-//   input = document.querySelector("#searchInput");
-//   filter = input.value.toUpperCase();
-//   table = document.querySelector("#list");
-//   tr = table.getElementsByTagName("tr");
-
-//   // Loop through all table rows, and hide those who don't match the search query
-//   for (i = 0; i < tr.length; i++) {
-//     td = tr[i].getElementsByTagName("td")[3];
-//     if (td) {
-//       txtValue = td.textContent || td.innerText;
-//       if (txtValue.toUpperCase().indexOf(filter) > -1) {
-//         tr[i].style.display = "";
-//       } else {
-//         tr[i].style.display = "none";
-//       }
-//     }
-//   }
-// }
-
 function searchFunction() {
   const input = document.querySelector("#searchInput");
   const searchStr = input.value.toUpperCase();
@@ -506,40 +483,22 @@ function squadClick(alumni) {
   if (isHacked === true) {
     // add timer
     if (alumni.squad === false) {
-      // alumni.squad = true; //plus set timer
       console.log("hacker mode squad TRUE");
-      alumni.squad = true;
-      allSquadMembers.push(alumni);
-      setTimeout(removeSquadMember, 3000);
-      function removeSquadMember() {
-        alumni.squad = false;
-        console.log("hacker mode i work for limited time", alumni.squad);
-        // update interface during hacker mode correctly
-        const index = allSquadMembers.indexOf(alumni);
-        allSquadMembers.splice(index, 1);
-        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
-        buildList();
-      }
+      makeSquadMember(alumni);
+      setTimeout(function () {
+        removeSquadMember(alumni);
+      }, 3000);
     } else if (isHacked === false) {
-      alumni.squad = false;
-      console.log("hacker mode squad FALSE");
-      allSquadMembers.splice(index, 1);
-      document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+      removeSquadMember(alumni);
     }
   }
   // IF NOT HACKED THE ORIGINAL SQUAD FUNCTION is below ONLY WRAPPED IN ELSE STATEMENT{}
-  else {
+  else if (isHacked === false) {
     if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
       if (alumni.squad === true) {
-        alumni.squad = false;
-        const index = allSquadMembers.indexOf(alumni);
-        allSquadMembers.splice(index, 1);
-        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
-        console.log("make false");
+        removeSquadMember(alumni);
       } else {
-        alumni.squad = true;
-        allSquadMembers.push(alumni);
-        console.log("make true");
+        makeSquadMember(alumni);
       }
     } else {
       console.log("not a pure blood student");
@@ -549,7 +508,17 @@ function squadClick(alumni) {
   }
   buildList();
 }
-
+function makeSquadMember(alumni) {
+  alumni.squad = true;
+  allSquadMembers.push(alumni);
+}
+function removeSquadMember(alumni) {
+  alumni.squad = false;
+  const index = allSquadMembers.indexOf(alumni);
+  allSquadMembers.splice(index, 1);
+  document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+  buildList();
+}
 // HACKING
 // task1 create objectMe and then add it to array and build list and make hacker impossible to be expelled DONE
 // task3 system is hacked = true ... big global flag so we know system is hacked

@@ -203,7 +203,14 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=blood]").textContent = alumni.blood;
 
   // BLOOD STATUS
+
+  // if (isHacked === true) {
+  //   getRandomBloodStatus(alumni);
+  // } else {
+  //   defineBloodStatus(alumni);
+  // }
   defineBloodStatus(alumni);
+
   // EXPELL STATUS
   if (alumni.expelled) {
     clone.querySelector("[data-field=status]").textContent = "EXPELLED";
@@ -221,6 +228,9 @@ function displayStudent(alumni) {
   // display squad
   clone.querySelector("[data-field=squad]").dataset.squad = alumni.squad;
   document.querySelector("[data-filter=squad]").textContent = "🎖️Inquisitorial Squad" + `(${allSquadMembers.length})`;
+  if (alumni.isHacked === true) {
+    clone.querySelector("[data-field=blood]").style.backgroundColor = "orange";
+  }
   // student click
   let studentBtn = clone.querySelectorAll("td.showPopup");
   studentBtn.forEach((btn) => {
@@ -463,20 +473,53 @@ function prefectClick(alumni) {
 // blood
 
 function defineBloodStatus(alumni) {
+  // Former pure-bloods will get completely random blood-status, whereas half- and muggle-bloods will be listed as pure-blood.
+  // If you can randomly modify the former pure - bloods on every redisplay(sort or filter) of the list, the better!
+
   if (isHacked === true) {
-    console.log("its hacking time");
-    // Former pure-bloods will get completely random blood-status, whereas half- and muggle-bloods will be listed as pure-blood.
-    // If you can randomly modify the former pure - bloods on every redisplay(sort or filter) of the list, the better!
-  } else if (isHacked === false) {
-    // ORIGINAL FUNCTION
-    if (halfBlood.includes(alumni.lastName)) {
-      alumni.blood = "half blood";
-    } else if (pureBlood.includes(alumni.lastName)) {
+    if (alumni.blood === "pure blood") {
+      console.log("you should be RANDOM blood");
+      getRandomBloodStatus(alumni);
+
+      console.log("random", alumni);
+    } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
       alumni.blood = "pure blood";
-    } else {
-      alumni.blood = "muggle";
+      console.log("you should be PURE blood");
+      console.log("pure", alumni);
+      return alumni;
     }
   }
+  // ORIGINAL FUNCTION
+  else {
+    if (halfBlood.includes(alumni.lastName)) {
+      alumni.blood = "half blood";
+      // if (isHacked === true) {
+      //   alumni.blood = "pure blood";
+      // }
+    } else if (pureBlood.includes(alumni.lastName)) {
+      alumni.blood = "pure blood";
+      // if (isHacked === true) {
+      //   getRandomBloodStatus(alumni);
+      // }
+    } else {
+      alumni.blood = "muggle";
+      // if (isHacked === true) {
+      //   alumni.blood = "pure blood";
+      // console.log("blood is", alumni.blood);
+      // console.log("blood object is", alumni);
+      // }
+    }
+  }
+}
+
+function getRandomBloodStatus(alumni) {
+  let p = "pure blood";
+  let h = "half blood";
+  let m = "muggle";
+  let hackedBloodStatus = [p, h, m];
+  let randomNumber = Math.floor(Math.random() * 3);
+  alumni.blood = hackedBloodStatus[randomNumber];
+  console.log(alumni.blood);
 }
 
 // squad close message popup
@@ -488,17 +531,10 @@ function closeMessage() {
 // squad function
 function squadClick(alumni) {
   if (isHacked === true) {
-    // add timer
-    if (alumni.squad === false) {
-      console.log("hacker mode squad TRUE");
-      makeSquadMember(alumni);
-      setTimeout(function () {
-        removeSquadMember(alumni);
-      }, 3000);
-    } else if (isHacked === false) {
-      removeSquadMember(alumni);
-    }
+    hackSquad(alumni);
+    buildList();
   }
+
   // IF NOT HACKED THE ORIGINAL SQUAD FUNCTION is below ONLY WRAPPED IN ELSE STATEMENT{}
   else if (isHacked === false) {
     if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
@@ -513,11 +549,11 @@ function squadClick(alumni) {
       document.querySelector("#squad").addEventListener("click", closeMessage);
     }
   }
-  buildList();
 }
 function makeSquadMember(alumni) {
   alumni.squad = true;
   allSquadMembers.push(alumni);
+  buildList();
 }
 function removeSquadMember(alumni) {
   alumni.squad = false;
@@ -525,6 +561,18 @@ function removeSquadMember(alumni) {
   allSquadMembers.splice(index, 1);
   document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
   buildList();
+}
+
+function hackSquad(alumni) {
+  if (alumni.squad === false) {
+    console.log("hacker mode squad TRUE");
+    makeSquadMember(alumni);
+    setTimeout(function () {
+      removeSquadMember(alumni);
+    }, 3000);
+  } else if (isHacked === false) {
+    removeSquadMember(alumni);
+  }
 }
 // HACKING
 // task1 create objectMe and then add it to array and build list and make hacker impossible to be expelled DONE
@@ -543,12 +591,11 @@ function hackTheSystem() {
   hacker.expelled = false;
   hacker.prefect = true;
   hacker.blood = "pure blood";
-  hacker.squad = true;
+  hacker.squad = false;
   hacker.isHacker = true;
   console.log("hacker", hacker);
-  activeStudents.push(hacker);
+  activeStudents.unshift(hacker);
   console.log("hacked list", activeStudents);
+
   buildList();
 }
-
-function flag() {}

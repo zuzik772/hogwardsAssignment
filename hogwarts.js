@@ -374,17 +374,12 @@ function displayNumberOfStudentsInHouse() {
 // }
 
 function searchFunction() {
-  // Declare variables
-
-  input = document.querySelector("#searchInput");
+  const input = document.querySelector("#searchInput");
   const searchStr = input.value.toUpperCase();
   const searchedStudents = activeStudents.filter((student) => {
     return student.firstName.toUpperCase().includes(searchStr) || student.lastName.toUpperCase().includes(searchStr);
   });
   displayList(searchedStudents);
-  // console.log(searchedStudents);
-
-  // Loop through all table rows, and hide those who don't match the search query
 }
 
 function showPopUp(student) {

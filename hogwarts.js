@@ -503,29 +503,55 @@ function closeMessage() {
 
 // squad function
 function squadClick(alumni) {
-  if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
-    if (alumni.squad === true) {
-      alumni.squad = false;
-      const index = allSquadMembers.indexOf(alumni);
-      allSquadMembers.splice(index, 1);
-      document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
-
-      console.log("make false");
-    } else {
+  if (isHacked === true) {
+    // add timer
+    if (alumni.squad === false) {
+      // alumni.squad = true; //plus set timer
+      console.log("hacker mode squad TRUE");
       alumni.squad = true;
       allSquadMembers.push(alumni);
-      console.log("make true");
+      setTimeout(removeSquadMember, 3000);
+      function removeSquadMember() {
+        alumni.squad = false;
+        console.log("hacker mode i work for limited time", alumni.squad);
+        // update interface during hacker mode correctly
+        const index = allSquadMembers.indexOf(alumni);
+        allSquadMembers.splice(index, 1);
+        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+        buildList();
+      }
+    } else if (isHacked === false) {
+      alumni.squad = false;
+      console.log("hacker mode squad FALSE");
+      allSquadMembers.splice(index, 1);
+      document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
     }
-  } else {
-    console.log("not a pure blood student");
-    document.querySelector("#squad").classList.remove("hidden");
-    document.querySelector("#squad").addEventListener("click", closeMessage);
+  }
+  // IF NOT HACKED THE ORIGINAL SQUAD FUNCTION is below ONLY WRAPPED IN ELSE STATEMENT{}
+  else {
+    if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
+      if (alumni.squad === true) {
+        alumni.squad = false;
+        const index = allSquadMembers.indexOf(alumni);
+        allSquadMembers.splice(index, 1);
+        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+        console.log("make false");
+      } else {
+        alumni.squad = true;
+        allSquadMembers.push(alumni);
+        console.log("make true");
+      }
+    } else {
+      console.log("not a pure blood student");
+      document.querySelector("#squad").classList.remove("hidden");
+      document.querySelector("#squad").addEventListener("click", closeMessage);
+    }
   }
   buildList();
 }
 
 // HACKING
-// task1 create objectMe and then add it to array and build list DONE
+// task1 create objectMe and then add it to array and build list and make hacker impossible to be expelled DONE
 // task3 system is hacked = true ... big global flag so we know system is hacked
 // task 3 continue.. if the hack is on than add the timer which removes the inq squad property from the object
 // task 2 mess up blood status in the loop by some rules

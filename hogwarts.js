@@ -521,7 +521,7 @@ function squadClick(alumni) {
 }
 
 // HACKING
-// task1 create objectMe and then add it to array and build list
+// task1 create objectMe and then add it to array and build list DONE
 // task3 system is hacked = true ... big global flag so we know system is hacked
 // task 3 continue.. if the hack is on than add the timer which removes the inq squad property from the object
 // task 2 mess up blood status in the loop by some rules

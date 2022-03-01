@@ -10,6 +10,7 @@ let expelledStudents = [];
 let activeStudents = [];
 let allPrefects = [];
 let allSquadMembers = [];
+let isHacked = false;
 const Student = {
   firstName: "",
   lastName: "",
@@ -447,18 +448,21 @@ function closePopUp() {
 }
 
 function expellStudent(expelledStudent) {
-  expelledStudent.expelled = true;
-  document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
-  document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
-  document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
-  document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
+  if (expelledStudent.isHacker === true) {
+    expelledStudent.expelled = false;
+  } else {
+    expelledStudent.expelled = true;
+    document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
+    document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
+    document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
 
-  let index = activeStudents.indexOf(expelledStudent);
-  if (index > -1) {
-    activeStudents.splice(index, 1);
-    expelledStudents.push(expelledStudent);
+    let index = activeStudents.indexOf(expelledStudent);
+    if (index > -1) {
+      activeStudents.splice(index, 1);
+      expelledStudents.push(expelledStudent);
+    }
   }
-
   buildList();
 }
 
@@ -526,6 +530,7 @@ function squadClick(alumni) {
 // task 3 continue.. if the hack is on than add the timer which removes the inq squad property from the object
 // task 2 mess up blood status in the loop by some rules
 function hackTheSystem() {
+  isHacked = true;
   const hacker = Object.create(Student);
   hacker.firstName = "Zuzana";
   hacker.nickName = "Zuz";
@@ -537,8 +542,11 @@ function hackTheSystem() {
   hacker.prefect = true;
   hacker.blood = "pure blood";
   hacker.squad = true;
+  hacker.isHacker = true;
   console.log("hacker", hacker);
   activeStudents.push(hacker);
   console.log("hacked list", activeStudents);
   buildList();
 }
+
+function flag() {}

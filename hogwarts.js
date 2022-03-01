@@ -190,9 +190,13 @@ function displayStudent(alumni) {
   defineBloodStatus(alumni);
   // EXPELL STATUS
   if (alumni.expelled) {
-    clone.querySelector("[data-field=status]").textContent = "expelled";
+    clone.querySelector("[data-field=status]").textContent = "EXPELLED";
+    clone.querySelector("[data-field=status]").style.color = "#E73D5C";
+    clone.querySelector("[data-field=status]").style.backgroundColor = "#FCEAEE";
   } else {
     clone.querySelector("[data-field=status]").textContent = "active";
+    clone.querySelector("[data-field=status]").style.color = "#3ECD78";
+    clone.querySelector("[data-field=status]").style.backgroundColor = "#F3FCF7";
   }
   //display prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = alumni.prefect;
@@ -480,7 +484,7 @@ function defineBloodStatus(alumni) {
 }
 
 // squad close message popup
-      function closeMessage() {
-        document.querySelector("#squad").classList.add("hidden");
-        document.querySelector("#squad").removeEventListener("click", closeMessage);
-      }
+function closeMessage() {
+  document.querySelector("#squad").classList.add("hidden");
+  document.querySelector("#squad").removeEventListener("click", closeMessage);
+}

@@ -17,11 +17,12 @@
 body {
   background-color: rgb(56, 56, 56);
   background-color: #004d40;
+  background-color: #f8f8f8;
 }
 h1 {
   font-size: 2.5rem;
-  font-family: "Shizuru", cursive;
-  color: orange;
+  font-family: "Fredoka", sans-serif;
+  color: #0d6430  ;
   text-align: center;
   max-width: 1600px;
   margin: 0 auto;
@@ -58,6 +59,7 @@ img {
 
 table {
   margin: 0 auto;
+  background-color: #ffffff;
 }
 /* [data-field="status"] {
   padding-right: 3rem;
@@ -75,16 +77,17 @@ th:hover {
 td.popup {
   text-align: center;
 }
-/* 
-tbody tr {
-  color: rgb(0, 0, 0);
-} */
 
-tbody tr:hover {
+tbody tr {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* tbody tr:hover {
   color: orange;
   outline: 2px solid orange;
   border-radius: 25px;
-}
+} */
 #squad,
 #studentPopUp,
 #onlytwoprefects,

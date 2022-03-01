@@ -130,6 +130,12 @@ function prepareObject(studentObject) {
   displayList(allStudents);
 }
 
+function buildList() {
+  const currentList = activeStudents;
+  displayList(currentList);
+}
+
+
 function capitalization(fullname) {
   fullname = fullname.toLowerCase();
   let fullnameArray = fullname.split("");
@@ -230,28 +236,10 @@ function displayStudent(alumni) {
     buildList();
   }
   // Inquisitorial squad click
-  clone.querySelector("[data-field=squad]").addEventListener("click", squadClick);
-  function squadClick() {
-    if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
-      if (alumni.squad === true) {
-        alumni.squad = false;
-        const index = allSquadMembers.indexOf(alumni);
-        allSquadMembers.splice(index, 1);
-        document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+  clone.querySelector("[data-field=squad]").addEventListener("click", function () {
+    squadClick(alumni);
+  });
 
-        console.log("make false");
-      } else {
-        alumni.squad = true;
-        allSquadMembers.push(alumni);
-        console.log("make true");
-      }
-    } else {
-      console.log("not a pure blood student");
-      document.querySelector("#squad").classList.remove("hidden");
-      document.querySelector("#squad").addEventListener("click", closeMessage);
-    }
-    buildList();
-  }
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
   //   console.table(alumni);
@@ -466,11 +454,6 @@ function expellStudent(expelledStudent) {
   buildList();
 }
 
-function buildList() {
-  const currentList = activeStudents;
-  displayList(currentList);
-}
-
 // blood
 
 function defineBloodStatus(alumni) {
@@ -487,4 +470,27 @@ function defineBloodStatus(alumni) {
 function closeMessage() {
   document.querySelector("#squad").classList.add("hidden");
   document.querySelector("#squad").removeEventListener("click", closeMessage);
+}
+
+// squad function
+function squadClick(alumni) {
+  if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
+    if (alumni.squad === true) {
+      alumni.squad = false;
+      const index = allSquadMembers.indexOf(alumni);
+      allSquadMembers.splice(index, 1);
+      document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
+
+      console.log("make false");
+    } else {
+      alumni.squad = true;
+      allSquadMembers.push(alumni);
+      console.log("make true");
+    }
+  } else {
+    console.log("not a pure blood student");
+    document.querySelector("#squad").classList.remove("hidden");
+    document.querySelector("#squad").addEventListener("click", closeMessage);
+  }
+  buildList();
 }

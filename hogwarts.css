@@ -3,34 +3,63 @@
   cursor: pointer;
   font-family: "Josefin Sans", sans-serif;
 }
-/* [data-field="prefect"] {
- display: flex;
-  align-items: center;
-  justify-content: center; 
-} */
+
 [data-action="remove"] {
   background-color: orange;
 }
-/* * {
-  color: orange;
-} */
+
 body {
-  background-color: rgb(56, 56, 56);
-  background-color: #004d40;
   background-color: #f8f8f8;
+  background-color: black;
 }
+
+/* header{
+  background-color: #e5e5f2;
+} */
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
+  font-weight: 700;
   font-family: "Fredoka", sans-serif;
-  color: #0d6430  ;
+  /* font-family: "Josefin Sans", sans-serif; */
+  color: orange;
   text-align: center;
   max-width: 1600px;
   margin: 0 auto;
+  padding: 2rem;
+}
+nav {
+  text-align: center;
+  margin: 2rem;
 }
 
-/* h2 {
-  font-family: "Josefin Sans", sans-serif;
-} */
+nav button {
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+input {
+  padding: 0.7rem 1rem;
+  width: 300px;
+  border: none;
+  border-radius: 5px;
+}
+main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+aside {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+table {
+  margin-left: 200px;
+  background-color: #ffffff;
+}
 
 nav p,
 button {
@@ -45,30 +74,29 @@ li {
   line-height: 1.4;
 }
 button {
-  background-color: rgb(41, 41, 41);
+  background-color: black;
+  font-size: 1rem;
+  border: none;
+  padding: 0.2rem 0.5rem;
+}
+
+nav button,
+aside button {
+  padding: 1.5rem;
 }
 thead,
-input,
 button:hover:not([data-action="remove"]) {
-  background-color: rgb(15, 15, 15);
+  background-color: #e5e5f2;
 }
 
 img {
   padding: 1rem 0;
 }
 
-table {
-  margin: 0 auto;
-  background-color: #ffffff;
-}
-/* [data-field="status"] {
-  padding-right: 3rem;
-} */
-
 th {
-  color: rgb(47, 192, 47);
+  color: #1d1d42;
   padding: 5px 10px;
-  /* width: 100px; */
+  width: 100px;
 }
 th:hover {
   color: rgb(148, 253, 148);
@@ -83,11 +111,6 @@ tbody tr {
   text-align: center;
 }
 
-/* tbody tr:hover {
-  color: orange;
-  outline: 2px solid orange;
-  border-radius: 25px;
-} */
 #squad,
 #studentPopUp,
 #onlytwoprefects,
@@ -138,10 +161,6 @@ button.closebutton {
 }
 
 /****** PREFECT ******/
-/* [data-field="prefect"][data-winner="false"] {
-  filter: grayscale(100%);
-  cursor: pointer;
-} */
 
 td[data-field="prefect"]::after {
   content: "📛";

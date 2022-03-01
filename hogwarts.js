@@ -203,7 +203,7 @@ function displayStudent(alumni) {
   document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
   // display squad
   clone.querySelector("[data-field=squad]").dataset.squad = alumni.squad;
-  document.querySelector("[data-filter=squad]").textContent = "Inquisitorial Squad" + `(${allSquadMembers.length})`;
+  document.querySelector("[data-filter=squad]").textContent = "🎖️Inquisitorial Squad" + `(${allSquadMembers.length})`;
   // student click
   let studentBtn = clone.querySelectorAll("td.showPopup");
   studentBtn.forEach((btn) => {

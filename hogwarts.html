@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="hogwarts.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,118 +15,109 @@
     <title>hogwarts</title>
   </head>
   <body>
-    <h1>Hogwarts School of Witchcraft and Wizardry</h1>
+    <header>
+      <h1>Hogwarts School of Witchcraft and Wizardry</h1>
 
-    <nav>
-      <p>
-        Filter 🎓Students:
+      <nav>
+        <!-- Filter 🎓Students: -->
         <button class="filter" data-action="filterStudent" data-filter="enrolled">✅Enrolled Students</button>
         <button class="filter" data-action="filterStudent" data-filter="expelled">❌Expelled Students</button>
         <button class="filter" data-action="filterStudent" data-filter="all">🎓All Students</button>
-      </p>
-      <p>
-        Filter 🏰House:
+        <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
+      </nav>
+    </header>
+    <!-- Filter 🏰House: -->
+    <main>
+      <aside>
         <button class="filter" data-action="filterHouse" data-filter="Gryffindor">🦁Gryffindor</button>
         <button class="filter" data-action="filterHouse" data-filter="Hufflepuff">🦡Hufflepuff</button>
         <button class="filter" data-action="filterHouse" data-filter="Ravenclaw">🦅Ravenclaw</button>
         <button class="filter" data-action="filterHouse" data-filter="Slytherin">🐍Slytherin</button>
-      </p>
-      <p>
-        Filter Responsabilities:
-        <button class="filter" data-action="filter" data-filter="squad">Inquisitorial Squad</button>
+        <!-- Filter Responsabilities: -->
         <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
-        <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button>
-      </p>
-      <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search for names.." />
-      <!-- <p class="numberOfDisplayedStudents">Number of currently displayed students:</p> -->
-    </nav>
+        <button class="filter" data-action="filter" data-filter="squad">🎖️Inquisitorial Squad</button>
+        <!-- <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button> -->
+      </aside>
 
-    <hr />
-
-    <table id="list">
-      <thead>
+      <table id="list">
+        <thead>
+          <tr>
+            <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="squad">Squad</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="nickName">Nick name</th>
+            <!-- <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th> -->
+            <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="blood">Blood-status</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="status">Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <template id="alumni">
         <tr>
-          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="squad">Squad</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="nickName">Nick name</th>
-          <!-- <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th> -->
-          <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="blood">Blood-status</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="status">Status</th>
+          <td data-field="prefect" data-prefect="false"></td>
+          <td data-field="squad" data-squad="false"></td>
+          <td class="showPopup" data-field="image"><img src="" alt="" /></td>
+          <td class="showPopup" data-field="firstName">FIRST NAME</td>
+          <td class="showPopup" data-field="lastName">LAST NAME</td>
+          <td class="showPopup" data-field="middleName">MIDDLE NAME</td>
+          <td class="showPopup" data-field="nickName">NICK NAME</td>
+          <!-- <td class="popup" data-field="image"><img src="" alt="" /></td> -->
+          <td class="showPopup" data-field="gender">GENDER</td>
+          <td class="showPopup" data-field="house">HOUSE</td>
+          <td class="showPopup" data-field="blood">BLOOD STATUS</td>
+          <td class="showPopup" data-field="status">STATUS</td>
         </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <template id="alumni">
-      <tr>
-        <td data-field="prefect" data-prefect="false"></td>
-        <td data-field="squad" data-squad="false"></td>
-        <td class="showPopup" data-field="image"><img src="" alt="" /></td>
-        <td class="showPopup" data-field="firstName">FIRST NAME</td>
-        <td class="showPopup" data-field="lastName">LAST NAME</td>
-        <td class="showPopup" data-field="middleName">MIDDLE NAME</td>
-        <td class="showPopup" data-field="nickName">NICK NAME</td>
-        <!-- <td class="popup" data-field="image"><img src="" alt="" /></td> -->
-        <td class="showPopup" data-field="gender">GENDER</td>
-        <td class="showPopup" data-field="house">HOUSE</td>
-        <td class="showPopup" data-field="blood">BLOOD STATUS</td>
-        <td class="showPopup" data-field="status">STATUS</td>
-      </tr>
-    </template>
-
-    <div id="studentPopUp" class="hidden">
-      <div class="content">
-        <button class="closebutton">X</button>
-        <h2>Hogwarts School of Witchcraft and Wizardry</h2>
-        <ul class="grid">
-          <li class="image"><img src="" alt="" /></li>
-          <div>
-            <div class="flex">
-              <li class="firstname">First name</li>
-              <li class="middlename">Middle name</li>
-              <li class="nickname">Nick name</li>
-              <li class="lastname">Last name</li>
+      </template>
+      <div id="studentPopUp" class="hidden">
+        <div class="content">
+          <button class="closebutton">X</button>
+          <h2>Hogwarts School of Witchcraft and Wizardry</h2>
+          <ul class="grid">
+            <li class="image"><img src="" alt="" /></li>
+            <div>
+              <div class="flex">
+                <li class="firstname">First name</li>
+                <li class="middlename">Middle name</li>
+                <li class="nickname">Nick name</li>
+                <li class="lastname">Last name</li>
+              </div>
+              <!-- <li class="image"><img src="" alt="" /></li> -->
+              <li class="house">House Crest</li>
+              <li class="blood">Blood-status</li>
+              <li class="prefect">Prefect - status:</li>
+              <li class="prefect">Squad - status:</li>
+              <li class="characteristics">additional characteristics</li>
             </div>
-            <!-- <li class="image"><img src="" alt="" /></li> -->
-            <li class="house">House Crest</li>
-            <li class="blood">Blood-status</li>
-            <li class="prefect">Prefect - status:</li>
-            <li class="prefect">Squad - status:</li>
-            <li class="characteristics">additional characteristics</li>
-          </div>
-        </ul>
-
-        <p>
-          <button data-action="remove">Expell <span class="expell">text</span></button>
-        </p>
+          </ul>
+          <p>
+            <button data-action="remove">Expell <span class="expell">text</span></button>
+          </p>
+        </div>
       </div>
-    </div>
-
-    <!-- Dialogs for handling too many prefects -->
-
-    <div id="onlytwoprefects" class="hidden">
-      <div class="dialogcontent">
-        <!-- <button class="closeButton">close</button> -->
-        <h3>You can have only 2 prefects from 1 house!</h3>
-        <h4>Remove one, before you appoint more</h4>
-        <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
-        <p><button data-action="remove2">remove</button> <span class="student2">NAME</span></p>
+      <!-- Dialogs for handling too many prefects -->
+      <div id="onlytwoprefects" class="hidden">
+        <div class="dialogcontent">
+          <!-- <button class="closeButton">close</button> -->
+          <h3>You can have only 2 prefects from 1 house!</h3>
+          <h4>Remove one, before you appoint more</h4>
+          <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
+          <p><button data-action="remove2">remove</button> <span class="student2">NAME</span></p>
+        </div>
       </div>
-    </div>
-
-    <div id="squad" class="hidden">
-      <div class="message">
-        <button class="closeButton">X</button>
-        <p>Only pure-blood or students from Slytherin can be appointed to be part of Inquisitorial Squad!</p>
-
-        <!-- <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p> -->
+      <div id="squad" class="hidden">
+        <div class="message">
+          <button class="closeButton">X</button>
+          <p>Only pure-blood or students from Slytherin can be appointed to be part of Inquisitorial Squad!</p>
+          <!-- <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p> -->
+        </div>
       </div>
-    </div>
+    </main>
 
     <script src="hogwarts.js"></script>
   </body>

@@ -448,23 +448,25 @@ function closePopUp() {
 
 function expellStudent(expelledStudent) {
   if (expelledStudent.isHacker === true) {
+    document.querySelector("#hackerMessage").classList.remove("hidden");
+    setTimeout(removeHackerMessage, 3000);
     expelledStudent.expelled = false;
   } else {
-    expelledStudent.expelled = true;
+    // removeHackerMessage();
     document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
     document.querySelector("#studentPopUp .status").style.color = "#E73D5C";
     document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
     document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
     document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
     document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
-
-    let index = activeStudents.indexOf(expelledStudent);
-    if (index > -1) {
-      activeStudents.splice(index, 1);
-      expelledStudents.push(expelledStudent);
-    }
+    setTimeout(function () {
+      waitAndRemove(expelledStudent);
+    }, 3000);
+    expelledStudent.expelled = true;
   }
+
   buildList();
+  document.querySelector(".showPopup").classList.add("glow");
 }
 
 // prefect
@@ -604,15 +606,36 @@ function hackTheSystem() {
   hacker.gender = "girl";
   hacker.house = "KEA";
   hacker.expelled = false;
-  hacker.prefect = true;
+  hacker.prefect = false;
   hacker.blood = "pure blood";
   hacker.squad = false;
   hacker.isHacker = true;
   console.log("hacker", hacker);
   activeStudents.unshift(hacker);
   console.log("hacked list", activeStudents);
-
+  document.querySelector("#hackerAnimation").classList.remove("hidden");
+  document.querySelector("#hackerMusic").play();
+  document.querySelector("table").style.backgroundColor = "black";
+  document.querySelector("table").style.color = "white";
+  document.querySelector("button[data-filter=all]").classList.add("hidden");
+  setTimeout(removeAnimation, 3000);
   buildList();
 }
 
+function removeAnimation() {
+  document.querySelector("#hackerAnimation").classList.add("hidden");
+}
+
+function removeHackerMessage() {
+  document.querySelector("#hackerMessage").classList.add("hidden");
+}
+
+function waitAndRemove(expelledStudent) {
+  let index = activeStudents.indexOf(expelledStudent);
+  if (index > -1) {
+    activeStudents.splice(index, 1);
+    expelledStudents.push(expelledStudent);
+  }
+  buildList();
+}
 document.querySelector("#hacker").addEventListener("click", hackTheSystem);

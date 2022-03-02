@@ -75,6 +75,7 @@ button {
 }
 
 button[data-action="remove"],
+#hackerMessage p,
 #squad p,
 #studentPopUp p {
   list-style: none;
@@ -119,7 +120,8 @@ tbody tr {
   font-size: 1.1rem;
   text-align: center;
 }
-
+#hackerMessage,
+#hackerAnimation,
 #squad,
 #studentPopUp,
 #onlytwoprefects,
@@ -135,8 +137,9 @@ tbody tr {
   /* pointer-events: none; */
   background-color: rgba(75, 75, 75, 0.63);
 }
-#squad {
-  background-color: rgba(75, 75, 75, 0.63);
+#hackerMessage {
+  background-color: rgba(177, 0, 0, 0.936);
+  transform: scale(5);
 }
 
 #squad .message,
@@ -164,6 +167,9 @@ button.closebutton {
   top: 1.2rem;
   right: 1.2rem;
 }
+.hidden,
+#hackerMessage.hidden,
+#hackerAnimation.hidden,
 #squad.hidden,
 #studentPopUp.hidden,
 #onlytwoprefects.hidden,
@@ -310,4 +316,41 @@ p.house {
   input {
     width: 200px;
   }
+}
+
+#svg {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  background-image: url(images/hacker.svg);
+  background-size: 100%;
+}
+
+.glow {
+  animation: glow 1s infinite;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: brightness(150%) drop-shadow(0 0 -5px red);
+  }
+
+  50% {
+    filter: brightness(150%) drop-shadow(0 0 240px red);
+  }
+}
+
+.zoomOut {
+  opacity: 100%;
+  animation: fade_out 3s;
+  animation-fill-mode: forwards;
+}
+
+footer {
+  color: white;
+}
+
+footer a:visited {
+  color: white;
 }

@@ -388,14 +388,16 @@ function showPopUp(student) {
   document.querySelector("#studentPopUp .closebutton").addEventListener("click", function () {
     closePopUp();
   });
-  document.querySelector("#studentPopUp .firstname").textContent = student.firstName;
-  document.querySelector("#studentPopUp .lastname").textContent = student.lastName;
-  document.querySelector("#studentPopUp .middlename").textContent = student.middleName;
-  document.querySelector("#studentPopUp .nickname").textContent = student.nickName;
-  document.querySelector("#studentPopUp .image img").src = `images/${student.image}`;
+  document.querySelector("#studentPopUp h2").textContent = student.firstName + " " + student.middleName + " " + student.nickName + " " + student.lastName;
+  // document.querySelector("#studentPopUp .lastname").textContent = student.lastName;
+  // document.querySelector("#studentPopUp .middlename").textContent = student.middleName;
+  // document.querySelector("#studentPopUp .nickname").textContent = student.nickName;
+  document.querySelector("#studentPopUp .image").src = `images/${student.image}`;
   document.querySelector("#studentPopUp .house").textContent = student.house;
   document.querySelector("#studentPopUp .prefect").textContent = student.prefect;
   document.querySelector("#studentPopUp .blood").textContent = student.blood;
+  document.querySelector("#studentPopUp .status").textContent = student.expelled;
+
   // document.querySelector("#studentPopUp .characteristics").textContent = student.firstName;
   // show names on buttonsblack
   document.querySelector("#studentPopUp [data-action=remove]").textContent = "Expell: " + student.firstName + " " + student.lastName;
@@ -405,27 +407,38 @@ function showPopUp(student) {
   // specify color for the house
   if (student.house === "Gryffindor") {
     document.querySelector("#studentPopUp .house").textContent = "🦁" + student.house;
-    document.querySelector("#studentPopUp .content").style.backgroundColor = "#BB0000";
-    document.querySelector("#studentPopUp .content").style.color = "#FFD700";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "#BB0000";
+    document.querySelector("#studentPopUp .color2").style.backgroundColor = "#FFD700";
   } else if (student.house === "Hufflepuff") {
     document.querySelector("#studentPopUp .house").textContent = "🦡" + student.house;
-    document.querySelector("#studentPopUp .content").style.backgroundColor = "rgb(27, 27, 27)";
-    document.querySelector("#studentPopUp .content").style.color = "yellow";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "rgb(27, 27, 27)";
+    document.querySelector("#studentPopUp .color2").style.backgroundColor = "yellow";
   } else if (student.house === "Ravenclaw") {
     document.querySelector("#studentPopUp .house").textContent = "🦅" + student.house;
-    document.querySelector("#studentPopUp .content").style.backgroundColor = "#065A79";
-    document.querySelector("#studentPopUp .content").style.color = "#F5BE14";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "#065A79";
+    document.querySelector("#studentPopUp .color2").style.backgroundColor = "#F5BE14";
   } else if (student.house === "Slytherin") {
     document.querySelector("#studentPopUp .house").textContent = "🐍" + student.house;
-    document.querySelector("#studentPopUp .content").style.backgroundColor = "#1D7452";
-    document.querySelector("#studentPopUp .content").style.color = "#E6E6E6";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "rgb(13 157 101)";
+    document.querySelector("#studentPopUp .color2").style.backgroundColor = "#E6E6E6";
   }
 
+  // display student status on pop up
+  if (student.expelled === false) {
+    document.querySelector("#studentPopUp .status").textContent = "ACTIVE ";
+    document.querySelector("#studentPopUp .status").style.color = "#3ECD78";
+  }
   // display prefect on pop up only if student is prefect
-  if (student.prefect === true) {
+  if (student.prefect) {
     document.querySelector("#studentPopUp .prefect").textContent = "📛Prefect";
-  } else if (student.prefect === false) {
+  } else {
     document.querySelector("#studentPopUp .prefect").textContent = "Not a prefect";
+  }
+  // display squad on pop up only if student is prefect
+  if (student.squad) {
+    document.querySelector("#studentPopUp .squad").textContent = "🎖️Squad member";
+  } else {
+    document.querySelector("#studentPopUp .squad").textContent = "Not a Squad member";
   }
 }
 function closePopUp() {
@@ -439,6 +452,8 @@ function expellStudent(expelledStudent) {
     expelledStudent.expelled = false;
   } else {
     expelledStudent.expelled = true;
+    document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
+    document.querySelector("#studentPopUp .status").style.color = "#E73D5C";
     document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
     document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
     document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";

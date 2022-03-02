@@ -6,6 +6,12 @@
 
 [data-action="remove"] {
   background-color: orange;
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  border-radius: 5px;
+
+  padding: 0.5rem 1rem;
 }
 
 body {
@@ -26,6 +32,13 @@ h1 {
   max-width: 1600px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Fredoka", sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 nav {
   text-align: center;
@@ -68,11 +81,11 @@ button {
 }
 
 button[data-action="remove"],
-li {
+#studentPopUp p {
   list-style: none;
   font-size: 1.1rem;
   font-family: "Josefin Sans", sans-serif;
-  line-height: 1.4;
+  line-height: 1.1;
 }
 button {
   background-color: black;
@@ -126,6 +139,7 @@ tbody tr {
   justify-content: center;
   /* pointer-events: none; */
 }
+
 #squad .message,
 #studentPopUp .content,
 #onlytwoprefects .dialogcontent {
@@ -135,6 +149,14 @@ tbody tr {
   padding: 2rem;
   border-radius: 25px;
   background-color: #e5c3c2;
+}
+
+#studentPopUp .content {
+  /* background-image: url(images/bg.jpg); */
+  background-color: rgb(17, 17, 17);
+  padding: 2rem;
+  color: white;
+  outline: 5px solid orange;
 }
 button.closeButton,
 button.closebutton {
@@ -152,13 +174,26 @@ button.closebutton {
 .flex {
   display: flex;
   gap: 2px;
+  margin: 0;
 }
 
 .grid {
-  display: flex;
-  /* flex-direction: column; */
+  display: grid;
+  /* flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: center; */
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  background-color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
+
+#studentPopUp img {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 /****** PREFECT ******/
@@ -189,4 +224,93 @@ td[data-field="squad"][data-squad="false"]::after {
   content: "🎖️";
   filter: grayscale(1);
   transform: scale(1.5);
+}
+
+.color1,
+.color2 {
+  width: 50px;
+  height: 50px;
+  background-color: black;
+}
+
+p.house {
+  font-family: "Fredoka";
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* MEDIA QUERIES  */
+@media screen and (max-width: 992px) {
+  h1 {
+    font-size: 2rem;
+  }
+  nav {
+    margin: 1rem;
+  }
+  nav button,
+  aside button {
+    padding: 10px;
+  }
+  main {
+    display: grid;
+  }
+  aside {
+    flex-direction: row;
+  }
+  thead tr,
+  tbody {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  /* thead tr {
+    display: grid;
+  } */
+  tbody tr {
+    display: grid;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  th {
+    text-align: start;
+  }
+  td {
+    padding: 3px;
+  }
+}
+@media screen and (max-width: 700px) {
+  aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width: 560px) {
+  h1 {
+    font-size: 1.8rem;
+    padding: 15px;
+    margin: 0;
+  }
+  nav {
+    margin: 0;
+  }
+  nav button,
+  aside button {
+    padding: 10px;
+  }
+  main {
+    flex-direction: column;
+  }
+  aside {
+    grid-template-columns: 1fr 1fr;
+  }
+  thead tr {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+@media screen and (max-width: 360px) {
+  input {
+    width: 200px;
+  }
 }

@@ -16,7 +16,7 @@
   </head>
   <body>
     <header>
-      <h1>Hogwarts School of Witchcraft and Wizardry</h1>
+      <h1>Hogwarts School of Witchcraft and <em id="hacker">Wizardry</em></h1>
 
       <nav>
         <!-- Filter 🎓Students: -->
@@ -36,7 +36,6 @@
         <!-- Filter Responsabilities: -->
         <button class="filter" data-action="filter" data-filter="prefects">📛Prefects</button>
         <button class="filter" data-action="filter" data-filter="squad">🎖️Inquisitorial Squad</button>
-        <!-- <button class="filter" data-action="filter" data-filter="players">👕Quidditch players</button> -->
       </aside>
 
       <table id="list">
@@ -49,7 +48,6 @@
             <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle name</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="nickName">Nick name</th>
-            <!-- <th data-action="sort" data-sort-direction="asc" data-sort="image">Image</th> -->
             <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="blood">Blood-status</th>
@@ -67,7 +65,6 @@
           <td class="showPopup" data-field="lastName">LAST NAME</td>
           <td class="showPopup" data-field="middleName">MIDDLE NAME</td>
           <td class="showPopup" data-field="nickName">NICK NAME</td>
-          <!-- <td class="popup" data-field="image"><img src="" alt="" /></td> -->
           <td class="showPopup" data-field="gender">GENDER</td>
           <td class="showPopup" data-field="house">HOUSE</td>
           <td class="showPopup" data-field="blood">BLOOD STATUS</td>
@@ -82,35 +79,18 @@
                       <img class="image" src="" alt="" />
                                <p class="house"></p>
           <div class="grid">
-
             <div>
-              <!-- <div class="flex"> -->
-              <!-- <li class="firstname">First name</li>
-                <li class="middlename">Middle name</li>
-                <li class="nickname">Nick name</li>
-                <li class="lastname">Last name</li> -->
-              <!-- </div> -->
-              <!-- <li class="image"><img src="" alt="" /></li> -->
-            <!-- <p>Student status: <span class="status"></span></p> -->
-                               <p>CHARACTERISTICS :</p>
+               <p>CHARACTERISTICS :</p>
               <p>1. <span class="blood"></span></p>
               <p>2. <span class="squad"></span></p>
-                            <p>3. <span class="prefect"></span></p>
+               <p>3. <span class="prefect"></span></p>
             </div>
             <div>
                 <p>Student status: <br><span class="status"></span></p>
-                   <!-- <p> <span class="house"></span></p> -->
               <p class="flex">Colors: <div class="flex">
                 <div class="color1"></div><div class="color2"></div>
               </div></p>
-           
-
             </div>
-            <!-- <p class="blood">Blood-status</p>
-              <p class="prefect">Prefect - status:</p>
-              <p class="prefect">Squad - status:</p>
-              <p class="characteristics">additional characteristics</p>
-        -->
           </div>
           <p>
             <button data-action="remove">Expell <span class="expell">text</span></button>
@@ -120,7 +100,6 @@
       <!-- Dialogs for handling too many prefects -->
       <div id="onlytwoprefects" class="hidden">
         <div class="dialogcontent">
-          <!-- <button class="closeButton">close</button> -->
           <h3>You can have only 2 prefects from 1 house!</h3>
           <h4>Remove one, before you appoint more</h4>
           <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p>
@@ -130,8 +109,7 @@
       <div id="squad" class="hidden">
         <div class="message">
           <button class="closeButton">X</button>
-          <p>Only pure-blood or students from Slytherin can be appointed to be part of Inquisitorial Squad!</p>
-          <!-- <p><button data-action="remove1">remove</button> <span class="student1">NAME</span></p> -->
+          <p>Only pure-blood or students from Slytherin <br> can be appointed to be part of Inquisitorial Squad!</p>
         </div>
       </div>
     </main>

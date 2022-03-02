@@ -203,13 +203,12 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=blood]").textContent = alumni.blood;
 
   // BLOOD STATUS
-
-  // if (isHacked === true) {
-  //   getRandomBloodStatus(alumni);
-  // } else {
-  //   defineBloodStatus(alumni);
-  // }
-  defineBloodStatus(alumni);
+  if (isHacked === true) {
+    // hackSquad(alumni);
+    getRandomBloodStatus(alumni);
+  } else {
+    defineBloodStatus(alumni);
+  }
 
   // EXPELL STATUS
   if (alumni.expelled) {
@@ -491,50 +490,51 @@ function defineBloodStatus(alumni) {
   // Former pure-bloods will get completely random blood-status, whereas half- and muggle-bloods will be listed as pure-blood.
   // If you can randomly modify the former pure - bloods on every redisplay(sort or filter) of the list, the better!
 
-  if (isHacked === true) {
-    if (alumni.blood === "pure blood") {
-      console.log("you should be RANDOM blood");
-      getRandomBloodStatus(alumni);
+  // if (alumni.blood === "pure blood") {
+  //   console.log("you should be RANDOM blood");
+  //   getRandomBloodStatus(alumni);
+  //   console.log("random", alumni);
+  // } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
+  //   alumni.blood = "pure blood";
+  //   console.log("you should be PURE blood");
+  //   console.log("pure", alumni);
+  //   return alumni;
+  // }
 
-      console.log("random", alumni);
-    } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
-      alumni.blood = "pure blood";
-      console.log("you should be PURE blood");
-      console.log("pure", alumni);
-      return alumni;
-    }
-  }
   // ORIGINAL FUNCTION
-  else {
-    if (halfBlood.includes(alumni.lastName)) {
-      alumni.blood = "half blood";
-      // if (isHacked === true) {
-      //   alumni.blood = "pure blood";
-      // }
-    } else if (pureBlood.includes(alumni.lastName)) {
-      alumni.blood = "pure blood";
-      // if (isHacked === true) {
-      //   getRandomBloodStatus(alumni);
-      // }
-    } else {
-      alumni.blood = "muggle";
-      // if (isHacked === true) {
-      //   alumni.blood = "pure blood";
-      // console.log("blood is", alumni.blood);
-      // console.log("blood object is", alumni);
-      // }
-    }
+
+  if (halfBlood.includes(alumni.lastName)) {
+    alumni.blood = "half blood";
+    // if (isHacked === true) {
+    //   alumni.blood = "pure blood";
+    // }
+  } else if (pureBlood.includes(alumni.lastName)) {
+    alumni.blood = "pure blood";
+    // if (isHacked === true) {
+    //   getRandomBloodStatus(alumni);
+    // }
+  } else {
+    alumni.blood = "muggle";
+    // if (isHacked === true) {
+    //   alumni.blood = "pure blood";
+    // console.log("blood is", alumni.blood);
+    // console.log("blood object is", alumni);
+    // }
   }
 }
 
 function getRandomBloodStatus(alumni) {
-  let p = "pure blood";
-  let h = "half blood";
-  let m = "muggle";
-  let hackedBloodStatus = [p, h, m];
-  let randomNumber = Math.floor(Math.random() * 3);
-  alumni.blood = hackedBloodStatus[randomNumber];
-  console.log(alumni.blood);
+  if (alumni.blood === "pure blood") {
+    let p = "pure blood";
+    let h = "half blood";
+    let m = "muggle";
+    let hackedBloodStatus = [p, h, m];
+    let randomNumber = Math.floor(Math.random() * 3);
+    alumni.blood = hackedBloodStatus[randomNumber];
+    console.log(alumni.blood);
+  } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
+    alumni.blood = "pure blood";
+  }
 }
 
 // squad close message popup
@@ -614,3 +614,5 @@ function hackTheSystem() {
 
   buildList();
 }
+
+document.querySelector("#hacker").addEventListener("click", hackTheSystem);

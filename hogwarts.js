@@ -117,7 +117,7 @@ function prepareObjects(jsonData) {
 }
 
 function prepareObject(studentObject) {
-  filteredArray = allStudents;
+  // filteredArray = allStudents;
 
   let fullname = studentObject.fullname.trim();
   let newFullname = capitalization(fullname);
@@ -139,9 +139,9 @@ function prepareObject(studentObject) {
   let studentGender = studentObject.gender;
   student.gender = studentGender;
 
-  allStudents.push(student);
+  //allStudents.push(student);
   activeStudents.push(student);
-  displayList(allStudents);
+  //displayList(allStudents);
 }
 
 function buildList() {
@@ -237,7 +237,6 @@ function displayStudent(alumni) {
     clone.querySelector("[data-field=gender]").style.backgroundColor = "#FCEAEE";
     clone.querySelector("[data-field=house]").style.backgroundColor = "#FCEAEE";
     clone.querySelector("[data-field=blood]").style.backgroundColor = "#FCEAEE";
-
   } else {
     clone.querySelector("[data-field=status]").textContent = "active";
     clone.querySelector("[data-field=status]").style.color = "#3ECD78";

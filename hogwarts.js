@@ -670,6 +670,7 @@ function waitAndRemove(expelledStudent) {
   if (index > -1) {
     activeStudents.splice(index, 1);
     expelledStudents.push(expelledStudent);
+    document.querySelector("table").style.color = "black";
   }
   buildList();
 }

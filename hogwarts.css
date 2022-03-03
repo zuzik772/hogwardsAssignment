@@ -139,7 +139,7 @@ tbody tr {
 }
 #hackerMessage {
   background-color: rgba(177, 0, 0, 0.936);
-  transform: scale(5);
+  transform: scale(4);
 }
 
 #squad .message,
@@ -287,6 +287,9 @@ p.house {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
+  #hackerMessage {
+    transform: scale(1.5);
+  }
 }
 @media screen and (max-width: 560px) {
   h1 {
@@ -338,6 +341,21 @@ p.house {
 
   50% {
     filter: brightness(150%) drop-shadow(0 0 240px red);
+  }
+}
+
+.glow2 {
+  animation: glow2 1s infinite;
+}
+
+@keyframes glow2 {
+  0%,
+  100% {
+    filter: brightness(150%) drop-shadow(0 0 0px red);
+  }
+
+  50% {
+    filter: brightness(150%) drop-shadow(0 0 10px red);
   }
 }
 

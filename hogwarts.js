@@ -42,10 +42,13 @@ function start() {
   const filterStudentBtns = document.querySelectorAll("[data-action=filterStudent]");
   filterStudentBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
-      if (this.dataset.filter === "all") {
-        displayList(allStudents);
-        console.log("this dataset filter is", this.dataset.filter);
-      } else if (this.dataset.filter === "expelled") {
+      // if (this.dataset.filter === "all") {
+      //   displayList(allStudents);
+      //   console.log("i am empty", allStudents);
+      //   console.log("this dataset filter is", this.dataset.filter);
+      // }
+      // else
+      if (this.dataset.filter === "expelled") {
         displayList(expelledStudents);
         console.log("i am empty", expelledStudents);
       } else if (this.dataset.filter === "enrolled") {
@@ -115,6 +118,7 @@ function prepareObjects(jsonData) {
 
 function prepareObject(studentObject) {
   filteredArray = allStudents;
+
   let fullname = studentObject.fullname.trim();
   let newFullname = capitalization(fullname);
 
@@ -142,6 +146,9 @@ function prepareObject(studentObject) {
 
 function buildList() {
   const currentList = activeStudents;
+  console.log(activeStudents);
+  console.log(allStudents);
+
   displayList(currentList);
 }
 
@@ -183,6 +190,7 @@ function displayList(students) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
 
+  console.log("students", students);
   // build a new list
   students.forEach(displayStudent);
 }
@@ -215,6 +223,21 @@ function displayStudent(alumni) {
     clone.querySelector("[data-field=status]").textContent = "EXPELLED";
     clone.querySelector("[data-field=status]").style.color = "#E73D5C";
     clone.querySelector("[data-field=status]").style.backgroundColor = "#FCEAEE";
+    // clone.querySelector("[data-field=image] img").style.backgroundColor = "#FCEAEE";
+
+    clone.querySelector("[data-field=image] img").classList.add("glow2");
+
+    clone.querySelector("[data-field=prefect]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=squad]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=firstName]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=lastName]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=middleName]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=nickName]").style.backgroundColor = "#FCEAEE";
+
+    clone.querySelector("[data-field=gender]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=house]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=blood]").style.backgroundColor = "#FCEAEE";
+
   } else {
     clone.querySelector("[data-field=status]").textContent = "active";
     clone.querySelector("[data-field=status]").style.color = "#3ECD78";
@@ -426,6 +449,14 @@ function showPopUp(student) {
   if (student.expelled === false) {
     document.querySelector("#studentPopUp .status").textContent = "ACTIVE ";
     document.querySelector("#studentPopUp .status").style.color = "#3ECD78";
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "orange";
+  } else if (student.expelled === true) {
+    document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
+    document.querySelector("#studentPopUp .status").style.color = "#E73D5C";
+    document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
+    document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
+    document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
   }
   // display prefect on pop up only if student is prefect
   if (student.prefect) {
@@ -443,30 +474,33 @@ function showPopUp(student) {
 function closePopUp() {
   document.querySelector("#studentPopUp").classList.add("hidden");
   // document.querySelector("#studentPopUp [data-action=remove]").textContent = "Expell: " + student.firstName + " " + student.lastName;
-  document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "orange";
 }
 
 function expellStudent(expelledStudent) {
   if (expelledStudent.isHacker === true) {
+    console.log(hacker);
     document.querySelector("#hackerMessage").classList.remove("hidden");
-    setTimeout(removeHackerMessage, 3000);
+    setTimeout(removeHackerMessage, 2000);
     expelledStudent.expelled = false;
   } else {
     // removeHackerMessage();
+    document.querySelector("#hackerMessage").classList.add("hidden");
+
+    closePopUp();
+    setTimeout(function () {
+      waitAndRemove(expelledStudent);
+    }, 1000);
+    expelledStudent.expelled = true;
     document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
     document.querySelector("#studentPopUp .status").style.color = "#E73D5C";
     document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
     document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "red";
     document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
     document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
-    setTimeout(function () {
-      waitAndRemove(expelledStudent);
-    }, 3000);
-    expelledStudent.expelled = true;
   }
 
   buildList();
-  document.querySelector(".showPopup").classList.add("glow");
+  // document.querySelector(".showPopup").classList.add("glow2");
 }
 
 // prefect
@@ -620,6 +654,7 @@ function hackTheSystem() {
   document.querySelector("button[data-filter=all]").classList.add("hidden");
   setTimeout(removeAnimation, 3000);
   buildList();
+  return hacker;
 }
 
 function removeAnimation() {
@@ -628,6 +663,7 @@ function removeAnimation() {
 
 function removeHackerMessage() {
   document.querySelector("#hackerMessage").classList.add("hidden");
+  // document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
 }
 
 function waitAndRemove(expelledStudent) {

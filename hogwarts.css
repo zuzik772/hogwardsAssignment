@@ -120,6 +120,11 @@ tbody tr {
   font-size: 1.1rem;
   text-align: center;
 }
+
+tbody tr:hover {
+  color: orange;
+  outline: 2px solid black;
+}
 #hackerMessage,
 #hackerAnimation,
 #squad,
@@ -159,7 +164,7 @@ tbody tr {
   background-color: rgb(17, 17, 17);
   padding: 2rem;
   color: white;
-  outline: 5px solid orange;
+  /* outline: 5px solid orange; */
 }
 button.closeButton,
 button.closebutton {

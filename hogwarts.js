@@ -11,6 +11,7 @@ let activeStudents = [];
 let allPrefects = [];
 let allSquadMembers = [];
 let isHacked = false;
+
 const Student = {
   firstName: "",
   lastName: "",
@@ -212,7 +213,6 @@ function displayStudent(alumni) {
 
   // BLOOD STATUS
   if (isHacked === true) {
-    // hackSquad(alumni);
     getRandomBloodStatus(alumni);
   } else {
     defineBloodStatus(alumni);
@@ -380,7 +380,6 @@ function displayNumberOfStudentsInHouse() {
   // About interface || number of students in each house
   const gryffindor = activeStudents.filter((student) => student.house === "Gryffindor");
   document.querySelector("[data-filter=Gryffindor]").textContent = "🦁Gryffindor" + `(${gryffindor.length})`;
-
   const hufflepuff = activeStudents.filter((student) => student.house === "Hufflepuff");
   document.querySelector("[data-filter=Hufflepuff]").textContent = "🦡Hufflepuff" + `(${hufflepuff.length})`;
   const ravenclaw = activeStudents.filter((student) => student.house === "Ravenclaw");
@@ -410,16 +409,12 @@ function showPopUp(student) {
     closePopUp();
   });
   document.querySelector("#studentPopUp h2").textContent = student.firstName + " " + student.middleName + " " + student.nickName + " " + student.lastName;
-  // document.querySelector("#studentPopUp .lastname").textContent = student.lastName;
-  // document.querySelector("#studentPopUp .middlename").textContent = student.middleName;
-  // document.querySelector("#studentPopUp .nickname").textContent = student.nickName;
   document.querySelector("#studentPopUp .image").src = `images/${student.image}`;
   document.querySelector("#studentPopUp .house").textContent = student.house;
   document.querySelector("#studentPopUp .prefect").textContent = student.prefect;
   document.querySelector("#studentPopUp .blood").textContent = student.blood;
   document.querySelector("#studentPopUp .status").textContent = student.expelled;
 
-  // document.querySelector("#studentPopUp .characteristics").textContent = student.firstName;
   // show names on buttonsblack
   document.querySelector("#studentPopUp [data-action=remove]").textContent = "Expell: " + student.firstName + " " + student.lastName;
   document.querySelector("#studentPopUp [data-action=remove]").addEventListener("click", function () {
@@ -428,27 +423,35 @@ function showPopUp(student) {
   // specify color for the house
   if (student.house === "Gryffindor") {
     document.querySelector("#studentPopUp .house").textContent = "🦁" + student.house;
+    document.querySelector("#studentPopUp .content").style.border = "10px solid #BB0000";
     document.querySelector("#studentPopUp .color1").style.backgroundColor = "#BB0000";
     document.querySelector("#studentPopUp .color2").style.backgroundColor = "#FFD700";
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "#FFD700";
   } else if (student.house === "Hufflepuff") {
     document.querySelector("#studentPopUp .house").textContent = "🦡" + student.house;
-    document.querySelector("#studentPopUp .color1").style.backgroundColor = "rgb(27, 27, 27)";
-    document.querySelector("#studentPopUp .color2").style.backgroundColor = "yellow";
+    document.querySelector("#studentPopUp .content").style.border = "10px solid #FFEA2C";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "#1B1B1B";
+    document.querySelector("#studentPopUp .color2").style.backgroundColor = "#FFEA2C";
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "#FFEA2C";
   } else if (student.house === "Ravenclaw") {
     document.querySelector("#studentPopUp .house").textContent = "🦅" + student.house;
+    document.querySelector("#studentPopUp .content").style.border = "10px solid #065A79";
     document.querySelector("#studentPopUp .color1").style.backgroundColor = "#065A79";
     document.querySelector("#studentPopUp .color2").style.backgroundColor = "#F5BE14";
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "#F5BE14";
   } else if (student.house === "Slytherin") {
     document.querySelector("#studentPopUp .house").textContent = "🐍" + student.house;
-    document.querySelector("#studentPopUp .color1").style.backgroundColor = "rgb(13 157 101)";
+    document.querySelector("#studentPopUp .content").style.border = "10px solid #0D9D65";
+    document.querySelector("#studentPopUp .color1").style.backgroundColor = "#0D9D65";
     document.querySelector("#studentPopUp .color2").style.backgroundColor = "#E6E6E6";
+    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "#E6E6E6";
   }
 
   // display student status on pop up
   if (student.expelled === false) {
     document.querySelector("#studentPopUp .status").textContent = "ACTIVE ";
     document.querySelector("#studentPopUp .status").style.color = "#3ECD78";
-    document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "orange";
+    // document.querySelector("#studentPopUp [data-action=remove]").style.backgroundColor = "orange";
   } else if (student.expelled === true) {
     document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
     document.querySelector("#studentPopUp .status").style.color = "#E73D5C";
@@ -487,7 +490,7 @@ function expellStudent(expelledStudent) {
 
     closePopUp();
     setTimeout(function () {
-      waitAndRemove(expelledStudent);
+      removeExpelledStudent(expelledStudent);
     }, 1000);
     expelledStudent.expelled = true;
     document.querySelector("#studentPopUp .status").textContent = "EXPELLED";
@@ -522,39 +525,12 @@ function prefectClick(alumni) {
 // blood
 
 function defineBloodStatus(alumni) {
-  // Former pure-bloods will get completely random blood-status, whereas half- and muggle-bloods will be listed as pure-blood.
-  // If you can randomly modify the former pure - bloods on every redisplay(sort or filter) of the list, the better!
-
-  // if (alumni.blood === "pure blood") {
-  //   console.log("you should be RANDOM blood");
-  //   getRandomBloodStatus(alumni);
-  //   console.log("random", alumni);
-  // } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
-  //   alumni.blood = "pure blood";
-  //   console.log("you should be PURE blood");
-  //   console.log("pure", alumni);
-  //   return alumni;
-  // }
-
-  // ORIGINAL FUNCTION
-
   if (halfBlood.includes(alumni.lastName)) {
     alumni.blood = "half blood";
-    // if (isHacked === true) {
-    //   alumni.blood = "pure blood";
-    // }
   } else if (pureBlood.includes(alumni.lastName)) {
     alumni.blood = "pure blood";
-    // if (isHacked === true) {
-    //   getRandomBloodStatus(alumni);
-    // }
   } else {
     alumni.blood = "muggle";
-    // if (isHacked === true) {
-    //   alumni.blood = "pure blood";
-    // console.log("blood is", alumni.blood);
-    // console.log("blood object is", alumni);
-    // }
   }
 }
 
@@ -643,6 +619,7 @@ function hackTheSystem() {
   hacker.blood = "pure blood";
   hacker.squad = false;
   hacker.isHacker = true;
+
   console.log("hacker", hacker);
   activeStudents.unshift(hacker);
   console.log("hacked list", activeStudents);
@@ -665,7 +642,7 @@ function removeHackerMessage() {
   // document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
 }
 
-function waitAndRemove(expelledStudent) {
+function removeExpelledStudent(expelledStudent) {
   let index = activeStudents.indexOf(expelledStudent);
   if (index > -1) {
     activeStudents.splice(index, 1);

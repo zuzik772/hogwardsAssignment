@@ -30,67 +30,7 @@ const settings = {
   isSortDir: false,
 };
 function start() {
-  // click filter house of student
-  const filterHouseBtns = document.querySelectorAll("[data-action=filterHouse]");
-  filterHouseBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      filterList(this.dataset.filter);
-      console.log("this dataset filter is", this.dataset.filter);
-    });
-  });
-
-  // click filter status of student
-  const filterStudentBtns = document.querySelectorAll("[data-action=filterStudent]");
-  filterStudentBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      // if (this.dataset.filter === "all") {
-      //   displayList(allStudents);
-      //   console.log("i am empty", allStudents);
-      //   console.log("this dataset filter is", this.dataset.filter);
-      // }
-      // else
-      if (this.dataset.filter === "expelled") {
-        displayList(expelledStudents);
-        console.log("i am empty", expelledStudents);
-      } else if (this.dataset.filter === "enrolled") {
-        displayList(activeStudents);
-        console.log("i am active", activeStudents);
-      }
-    });
-  });
-
-  // click filter prefect
-  document.querySelector("[data-filter=prefects]").addEventListener("click", function () {
-    displayList(allPrefects);
-  });
-
-  // click filter squad
-  document.querySelector("[data-filter=squad]").addEventListener("click", function () {
-    displayList(allSquadMembers);
-  });
-
-  // click sort for evrything
-  const sortBtns = document.querySelectorAll("[data-action=sort]");
-  sortBtns.forEach((sortBtn) => {
-    sortBtn.addEventListener("click", function () {
-      if (settings.isSortDir === true) {
-        settings.isSortDir = false;
-        // sortBtn.style.color = "orange";
-        // sortBtn.textContent = "👇" + this.dataset.sort;
-
-        console.log("its false");
-        sortList(filteredArray, this.dataset.sort, "asc");
-      } else {
-        settings.isSortDir = true;
-        // sortBtn.style.color = "red";
-        // sortBtn.textContent = "👆" + this.dataset.sort;
-        console.log("its true");
-        sortList(filteredArray, this.dataset.sort, "desc");
-      }
-
-      // sortList(filteredArray, this.dataset.sort);
-    });
-  });
+  console.log("lets begin");
   loadJson1();
 }
 
@@ -113,7 +53,9 @@ async function loadJson2() {
 
 function prepareObjects(jsonData) {
   allStudents = jsonData.map(prepareObject);
-
+  filteredArray = allStudents;
+  // activeStudents = allStudents;
+  // displayList(allStudents);
   buildList();
 }
 
@@ -140,15 +82,68 @@ function prepareObject(studentObject) {
   let studentGender = studentObject.gender;
   student.gender = studentGender;
 
-  //allStudents.push(student);
+  allStudents.push(student);
+
   activeStudents.push(student);
-  //displayList(allStudents);
+  defineBloodStatus(student);
+  // displayList(allStudents);
+  // buildList(allStudents);
+  return student;
 }
 
 function buildList() {
   const currentList = activeStudents;
-  console.log(activeStudents);
-  console.log(allStudents);
+  //
+
+  // click filter house of student
+  const filterHouseBtns = document.querySelectorAll("[data-action=filterHouse]");
+  filterHouseBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      filterList(this.dataset.filter);
+    });
+  });
+
+  // click filter status of student
+  const filterStudentBtns = document.querySelectorAll("[data-action=filterStudent]");
+  filterStudentBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      if (this.dataset.filter === "all") {
+        displayList(allStudents);
+      } else if (this.dataset.filter === "expelled") {
+        displayList(expelledStudents);
+      } else if (this.dataset.filter === "enrolled") {
+        displayList(activeStudents);
+      }
+    });
+  });
+
+  // click sort for evrything
+  const sortBtns = document.querySelectorAll("[data-action=sort]");
+  sortBtns.forEach((sortBtn) => {
+    sortBtn.addEventListener("click", function () {
+      if (settings.isSortDir === true) {
+        settings.isSortDir = false;
+        console.log("its false");
+        sortList(filteredArray, this.dataset.sort, "asc");
+      } else {
+        settings.isSortDir = true;
+        console.log("its true");
+        sortList(filteredArray, this.dataset.sort, "desc");
+      }
+
+      // sortList(filteredArray, this.dataset.sort);
+    });
+  });
+
+  // click filter prefect
+  document.querySelector("[data-filter=prefects]").addEventListener("click", function () {
+    displayList(allPrefects);
+  });
+
+  // click filter squad
+  document.querySelector("[data-filter=squad]").addEventListener("click", function () {
+    displayList(allSquadMembers);
+  });
 
   displayList(currentList);
 }
@@ -191,7 +186,7 @@ function displayList(students) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
 
-  console.log("students", students);
+  // console.log("students", students);
   // build a new list
   students.forEach(displayStudent);
 }
@@ -211,13 +206,9 @@ function displayStudent(alumni) {
   clone.querySelector("[data-field=house]").textContent = alumni.house;
   clone.querySelector("[data-field=blood]").textContent = alumni.blood;
 
-  // BLOOD STATUS
   if (isHacked === true) {
-    getRandomBloodStatus(alumni);
-  } else {
-    defineBloodStatus(alumni);
+    clone.querySelector("[data-field=blood]").style.backgroundColor = "#BB0000";
   }
-
   // EXPELL STATUS
   if (alumni.expelled) {
     clone.querySelector("[data-field=status]").textContent = "EXPELLED";
@@ -225,18 +216,18 @@ function displayStudent(alumni) {
     clone.querySelector("[data-field=status]").style.backgroundColor = "#FCEAEE";
     // clone.querySelector("[data-field=image] img").style.backgroundColor = "#FCEAEE";
 
-    clone.querySelector("[data-field=image] img").classList.add("glow2");
+    // clone.querySelector("[data-field=image] img").classList.add("glow2");
 
-    clone.querySelector("[data-field=prefect]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=squad]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=firstName]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=lastName]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=middleName]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=nickName]").style.backgroundColor = "#FCEAEE";
-
-    clone.querySelector("[data-field=gender]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=house]").style.backgroundColor = "#FCEAEE";
-    clone.querySelector("[data-field=blood]").style.backgroundColor = "#FCEAEE";
+    clone.querySelector("[data-field=image] img").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=prefect]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=squad]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=firstName]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=lastName]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=middleName]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=nickName]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=gender]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=house]").style.backgroundColor = "#BB0000";
+    clone.querySelector("[data-field=blood]").style.backgroundColor = "#BB0000";
   } else {
     clone.querySelector("[data-field=status]").textContent = "active";
     clone.querySelector("[data-field=status]").style.color = "#3ECD78";
@@ -249,9 +240,7 @@ function displayStudent(alumni) {
   // display squad
   clone.querySelector("[data-field=squad]").dataset.squad = alumni.squad;
   document.querySelector("[data-filter=squad]").textContent = "🎖️Inquisitorial Squad" + `(${allSquadMembers.length})`;
-  if (alumni.isHacked === true) {
-    clone.querySelector("[data-field=blood]").style.backgroundColor = "orange";
-  }
+
   // student click
   let studentBtn = clone.querySelectorAll("td.showPopup");
   studentBtn.forEach((btn) => {
@@ -353,7 +342,7 @@ function filterList(house) {
     list = activeStudents;
   }
   filteredArray = list;
-  // console.table(filteredArray);
+  console.table(filteredArray);
   displayList(filteredArray);
 }
 
@@ -363,7 +352,6 @@ function sortList(arr, propertyName, direction) {
   if (direction === "desc") {
     list = list.reverse();
   }
-  console.log(list);
   function isPropertyName(studentA, studentB) {
     if (studentA[propertyName] < studentB[propertyName]) {
       return -1;
@@ -500,9 +488,16 @@ function expellStudent(expelledStudent) {
     document.querySelector("#studentPopUp [data-action=remove]").style.color = "white";
     document.querySelector("#studentPopUp [data-action=remove]").innerHTML = "EXPELLED!!!";
   }
-
   buildList();
-  // document.querySelector(".showPopup").classList.add("glow2");
+}
+
+function removeExpelledStudent(expelledStudent) {
+  let index = activeStudents.indexOf(expelledStudent);
+  if (index > -1) {
+    activeStudents.splice(index, 1);
+    expelledStudents.push(expelledStudent);
+  }
+  buildList();
 }
 
 // prefect
@@ -518,7 +513,6 @@ function prefectClick(alumni) {
     tryToMakePrefect(alumni);
     console.log("make true");
   }
-
   buildList();
 }
 
@@ -526,25 +520,11 @@ function prefectClick(alumni) {
 
 function defineBloodStatus(alumni) {
   if (halfBlood.includes(alumni.lastName)) {
-    alumni.blood = "half blood";
+    alumni.blood = "half";
   } else if (pureBlood.includes(alumni.lastName)) {
-    alumni.blood = "pure blood";
+    alumni.blood = "pure";
   } else {
     alumni.blood = "muggle";
-  }
-}
-
-function getRandomBloodStatus(alumni) {
-  if (alumni.blood === "pure blood") {
-    let p = "pure blood";
-    let h = "half blood";
-    let m = "muggle";
-    let hackedBloodStatus = [p, h, m];
-    let randomNumber = Math.floor(Math.random() * 3);
-    alumni.blood = hackedBloodStatus[randomNumber];
-    console.log(alumni.blood);
-  } else if (alumni.blood === "half blood" || alumni.blood === "muggle") {
-    alumni.blood = "pure blood";
   }
 }
 
@@ -607,6 +587,7 @@ function hackSquad(alumni) {
 // task 2 mess up blood status in the loop by some rules
 function hackTheSystem() {
   isHacked = true;
+  console.log("hacking time");
   const hacker = Object.create(Student);
   hacker.firstName = "Zuzana";
   hacker.nickName = "Zuz";
@@ -620,17 +601,30 @@ function hackTheSystem() {
   hacker.squad = false;
   hacker.isHacker = true;
 
-  console.log("hacker", hacker);
   activeStudents.unshift(hacker);
+  allStudents.unshift(hacker);
   console.log("hacked list", activeStudents);
+
   document.querySelector("#hackerAnimation").classList.remove("hidden");
   document.querySelector("#hackerMusic").play();
   document.querySelector("table").style.backgroundColor = "black";
   document.querySelector("table").style.color = "white";
-  document.querySelector("button[data-filter=all]").classList.add("hidden");
   setTimeout(removeAnimation, 3000);
+  getRandomBloodStatus();
   buildList();
   return hacker;
+}
+
+function getRandomBloodStatus() {
+  allStudents.forEach((student) => {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const randomArray = ["muggle", "half", "pure"];
+    if (student.blood === "pure") {
+      student.blood = randomArray[randomNumber];
+    } else if (student.blood === "half" || student.blood === "muggle") {
+      student.blood = "pure";
+    }
+  });
 }
 
 function removeAnimation() {
@@ -639,16 +633,6 @@ function removeAnimation() {
 
 function removeHackerMessage() {
   document.querySelector("#hackerMessage").classList.add("hidden");
-  // document.querySelector("#studentPopUp [data-action=remove]").disabled = true;
 }
 
-function removeExpelledStudent(expelledStudent) {
-  let index = activeStudents.indexOf(expelledStudent);
-  if (index > -1) {
-    activeStudents.splice(index, 1);
-    expelledStudents.push(expelledStudent);
-    document.querySelector("table").style.color = "black";
-  }
-  buildList();
-}
 document.querySelector("#hacker").addEventListener("click", hackTheSystem);

@@ -312,10 +312,10 @@ function tryToMakePrefect(selectedStudent) {
     }
   }
 
-  function removePrefect(prefectStudent) {
-    prefectStudent.prefect = false;
+  function removePrefect(student) {
+    student.prefect = false;
     // prefects.length--;
-    const index = allPrefects.indexOf(prefectStudent);
+    const index = allPrefects.indexOf(student);
     allPrefects.splice(index, 1);
     buildList();
   }

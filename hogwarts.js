@@ -27,7 +27,6 @@ const Student = {
 };
 
 const settings = {
-  isSortDir: false,
   sortBy: null,
   sortDir: "asc",
   filterBy: null,
@@ -205,9 +204,11 @@ function displayStudent(alumni) {
   studentBtn.forEach((btn) => {
     btn.addEventListener("click", function () {
       showPopUp(alumni);
+      console.log("alumni", alumni);
       // btn.style.backgroundColor = "yellow";
     });
   });
+
   // prefect click
   clone.querySelector("[data-field=prefect]").addEventListener("click", function () {
     prefectClick(alumni);
@@ -362,6 +363,8 @@ function showPopUp(student) {
   document.querySelector("#studentPopUp [data-action=remove]").addEventListener("click", function () {
     expellStudent(student);
   });
+
+  console.log("is student expelled?", student.expelled);
   // specify color for the house
   if (student.house === "Gryffindor") {
     document.querySelector("#studentPopUp .house").textContent = "🦁" + student.house;
@@ -420,6 +423,7 @@ function closePopUp() {
 }
 
 function expellStudent(expelledStudent) {
+  console.log(expelledStudent);
   if (expelledStudent.isHacker === true) {
     console.log(hacker);
     document.querySelector("#hackerMessage").classList.remove("hidden");
@@ -446,11 +450,13 @@ function expellStudent(expelledStudent) {
 
 function removeExpelledStudent(expelledStudent) {
   let index = activeStudents.indexOf(expelledStudent);
-  if (index > -1) {
+  console.log(`index: ${index}`);
+  if (index >= 0) {
     activeStudents.splice(index, 1);
     expelledStudents.push(expelledStudent);
   }
   buildList();
+  console.log("index of expelled student is", index);
 }
 
 // prefect
@@ -554,8 +560,8 @@ function squadClick(alumni) {
   }
 
   // IF NOT HACKED THE ORIGINAL SQUAD FUNCTION is below ONLY WRAPPED IN ELSE STATEMENT{}
-  else if (isHacked === false) {
-    if (alumni.blood === "pure blood" || alumni.house === "Slytherin") {
+  else {
+    if (alumni.blood === "pure" || alumni.house === "Slytherin") {
       if (alumni.squad === true) {
         removeSquadMember(alumni);
       } else {
@@ -567,18 +573,19 @@ function squadClick(alumni) {
       document.querySelector("#squad").addEventListener("click", closeMessage);
     }
   }
+  buildList();
 }
 function makeSquadMember(alumni) {
   alumni.squad = true;
   allSquadMembers.push(alumni);
-  buildList();
+  // buildList();
 }
 function removeSquadMember(alumni) {
   alumni.squad = false;
   const index = allSquadMembers.indexOf(alumni);
   allSquadMembers.splice(index, 1);
   document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
-  buildList();
+  // buildList();
 }
 
 // squad close message popup
@@ -615,7 +622,7 @@ function hackTheSystem() {
   hacker.house = "KEA";
   hacker.expelled = false;
   hacker.prefect = false;
-  hacker.blood = "pure blood";
+  hacker.blood = "pure";
   hacker.squad = false;
   hacker.isHacker = true;
 

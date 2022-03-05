@@ -28,6 +28,9 @@ const Student = {
 
 const settings = {
   isSortDir: false,
+  sortBy: null,
+  sortDir: "asc",
+  filterBy: null,
 };
 function start() {
   console.log("lets begin");
@@ -54,14 +57,10 @@ async function loadJson2() {
 function prepareObjects(jsonData) {
   allStudents = jsonData.map(prepareObject);
   filteredArray = allStudents;
-  // activeStudents = allStudents;
-  // displayList(allStudents);
   buildList();
 }
 
 function prepareObject(studentObject) {
-  // filteredArray = allStudents;
-
   let fullname = studentObject.fullname.trim();
   let newFullname = capitalization(fullname);
 
@@ -86,67 +85,28 @@ function prepareObject(studentObject) {
 
   activeStudents.push(student);
   defineBloodStatus(student);
-  // displayList(allStudents);
-  // buildList(allStudents);
   return student;
 }
 
 function buildList() {
-  const currentList = activeStudents;
-  //
-
-  // click filter house of student
-  const filterHouseBtns = document.querySelectorAll("[data-action=filterHouse]");
-  filterHouseBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      filterList(this.dataset.filter);
-    });
+  // click filter for everything
+  const filterBtns = document.querySelectorAll("[data-action=filter]");
+  filterBtns.forEach((filterBtn) => {
+    filterBtn.addEventListener("click", selectFilter);
   });
 
-  // click filter status of student
-  const filterStudentBtns = document.querySelectorAll("[data-action=filterStudent]");
-  filterStudentBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      if (this.dataset.filter === "all") {
-        displayList(allStudents);
-      } else if (this.dataset.filter === "expelled") {
-        displayList(expelledStudents);
-      } else if (this.dataset.filter === "enrolled") {
-        displayList(activeStudents);
-      }
-    });
-  });
-
-  // click sort for evrything
+  // click sort for everything
   const sortBtns = document.querySelectorAll("[data-action=sort]");
   sortBtns.forEach((sortBtn) => {
-    sortBtn.addEventListener("click", function () {
-      if (settings.isSortDir === true) {
-        settings.isSortDir = false;
-        console.log("its false");
-        sortList(filteredArray, this.dataset.sort, "asc");
-      } else {
-        settings.isSortDir = true;
-        console.log("its true");
-        sortList(filteredArray, this.dataset.sort, "desc");
-      }
-
-      // sortList(filteredArray, this.dataset.sort);
-    });
+    sortBtn.addEventListener("click", selectSort);
   });
 
-  // click filter prefect
-  document.querySelector("[data-filter=prefects]").addEventListener("click", function () {
-    displayList(allPrefects);
-  });
-
-  // click filter squad
-  document.querySelector("[data-filter=squad]").addEventListener("click", function () {
-    displayList(allSquadMembers);
-  });
-
-  displayList(currentList);
+  // first filter then sort
+  const currentList = filterList(activeStudents);
+  const sortedList = sortList(currentList);
+  displayList(sortedList);
 }
+
 
 function capitalization(fullname) {
   fullname = fullname.toLowerCase();
@@ -262,105 +222,102 @@ function displayStudent(alumni) {
   document.querySelector("#list tbody").appendChild(clone);
 }
 
-function tryToMakePrefect(selectedStudent) {
-  // take all the students and filter them by every student where student.prefect is true
-  const prefects = activeStudents.filter((student) => student.prefect);
-  const other = prefects.filter((student) => student.house === selectedStudent.house);
-  const numberOfOthers = other.length;
-
-  if (selectedStudent.prefect === false) {
-    if (numberOfOthers >= 2) {
-      console.log("you can have only 2 prefects from 1 house", other);
-      removePrefectAorB(other[0], other[1]);
-      //  Display number of prefects
-      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
-    } else {
-      makePrefect(selectedStudent);
-    }
-    console.log("other student is", other);
-  }
-
-  function removePrefectAorB(prefectA, prefectB) {
-    console.log("remove prefectA or prefectB");
-    document.querySelector("#onlytwoprefects").classList.remove("hidden");
-    document.querySelector("#onlytwoprefects [data-action=remove1]").addEventListener("click", clickRemoveA);
-    document.querySelector("#onlytwoprefects [data-action=remove2]").addEventListener("click", clickRemoveB);
-
-    // show names on buttons
-    document.querySelector("#onlytwoprefects .student1").textContent = prefectA.firstName + " " + prefectA.lastName;
-    document.querySelector("#onlytwoprefects .student2").textContent = prefectB.firstName + " " + prefectB.lastName;
-
-    function closeDialog() {
-      document.querySelector("#onlytwoprefects").classList.add("hidden");
-      // its good practice to remove event listener if u dont need it anymore
-      document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
-      document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
-    }
-
-    function clickRemoveA() {
-      removePrefect(prefectA);
-      makePrefect(selectedStudent);
-      buildList();
-      closeDialog();
-    }
-
-    function clickRemoveB() {
-      removePrefect(prefectB);
-      makePrefect(selectedStudent);
-      buildList();
-      closeDialog();
-    }
-  }
-
-  function removePrefect(student) {
-    student.prefect = false;
-    // prefects.length--;
-    const index = allPrefects.indexOf(student);
-    allPrefects.splice(index, 1);
-    buildList();
-  }
-  function makePrefect(student) {
-    student.prefect = true;
-    allPrefects.push(student);
-    buildList();
-    document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
-  }
+// FILTERING
+function selectFilter(event) {
+  const myFilter = event.target.dataset.filter;
+  setFilter(myFilter);
 }
 
-// filtering house
-function filterList(house) {
-  let list = activeStudents.filter(isStudentHouse);
-  function isStudentHouse(student) {
-    if (student.house === house) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+function setFilter(filter) {
+  settings.filterBy = filter;
+  buildList();
+}
 
-  if (list.length === 0) {
-    list = activeStudents;
+function filterList(filteredList) {
+  //
+  if (settings.filterBy === "Gryffindor") {
+    filteredList = activeStudents.filter(isGryffindor);
+  } else if (settings.filterBy === "Slytherin") {
+    filteredList = activeStudents.filter(isSlytherin);
+  } else if (settings.filterBy === "Ravenclaw") {
+    filteredList = activeStudents.filter(isRavenclaw);
+  } else if (settings.filterBy === "Hufflepuff") {
+    filteredList = activeStudents.filter(isHufflepuff);
+  } else if (settings.filterBy === "expelled") {
+    filteredList = allStudents.filter(isExpelled);
+  } else if (settings.filterBy === "prefects") {
+    filteredList = activeStudents.filter(isPrefect);
+  } else if (settings.filterBy === "squad") {
+    filteredList = activeStudents.filter(isSquad);
   }
-  filteredArray = list;
-  console.table(filteredArray);
-  displayList(filteredArray);
+  // to display all student (even expelled)
+  else if (settings.filterBy === "all") {
+    filteredList = allStudents;
+  }
+  return filteredList;
+}
+
+function isGryffindor(student) {
+  return student.house === "Gryffindor";
+}
+function isSlytherin(student) {
+  return student.house === "Slytherin";
+}
+function isRavenclaw(student) {
+  return student.house === "Ravenclaw";
+}
+function isHufflepuff(student) {
+  return student.house === "Hufflepuff";
+}
+
+function isExpelled(student) {
+  return student.expelled === true;
+}
+function isPrefect(student) {
+  return student.prefect === true;
+}
+function isSquad(student) {
+  return student.squad === true;
 }
 
 // sorting
-function sortList(arr, propertyName, direction) {
-  let list = arr.sort(isPropertyName);
-  if (direction === "desc") {
-    list = list.reverse();
+
+function selectSort(event) {
+  const sortBy = event.target.dataset.sort;
+  const sortDir = event.target.dataset.sortDirection;
+
+  // toggle direction
+  if (sortDir === "asc") {
+    event.target.dataset.sortDirection = "desc";
+  } else {
+    event.target.dataset.sortDirection = "asc";
   }
-  function isPropertyName(studentA, studentB) {
-    if (studentA[propertyName] < studentB[propertyName]) {
-      return -1;
+  setSort(sortBy, sortDir);
+}
+
+function setSort(sortBy, sortDir) {
+  settings.sortBy = sortBy;
+  settings.sortDir = sortDir;
+  buildList();
+}
+
+function sortList(sortedList) {
+  let direction = 1;
+  if (settings.sortDir === "desc") {
+    direction = -1;
+  } else {
+    settings.direction = 1;
+  }
+  sortedList = sortedList.sort(sortByProperty);
+
+  function sortByProperty(propertyA, propertyB) {
+    if (propertyA[settings.sortBy] < propertyB[settings.sortBy]) {
+      return -1 * direction;
     } else {
-      return 1;
+      return 1 * direction;
     }
   }
-
-  displayList(list);
+  return sortedList;
 }
 
 // number of student in each house
@@ -516,6 +473,72 @@ function prefectClick(alumni) {
   buildList();
 }
 
+function tryToMakePrefect(selectedStudent) {
+  // take all the students and filter them by every student where student.prefect is true
+  const prefects = activeStudents.filter((student) => student.prefect);
+  const other = prefects.filter((student) => student.house === selectedStudent.house);
+  const numberOfOthers = other.length;
+
+  if (selectedStudent.prefect === false) {
+    if (numberOfOthers >= 2) {
+      console.log("you can have only 2 prefects from 1 house", other);
+      removePrefectAorB(other[0], other[1]);
+      //  Display number of prefects
+      document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
+    } else {
+      makePrefect(selectedStudent);
+    }
+    console.log("other student is", other);
+  }
+
+  function removePrefectAorB(prefectA, prefectB) {
+    console.log("remove prefectA or prefectB");
+    document.querySelector("#onlytwoprefects").classList.remove("hidden");
+    document.querySelector("#onlytwoprefects [data-action=remove1]").addEventListener("click", clickRemoveA);
+    document.querySelector("#onlytwoprefects [data-action=remove2]").addEventListener("click", clickRemoveB);
+
+    // show names on buttons
+    document.querySelector("#onlytwoprefects .student1").textContent = prefectA.firstName + " " + prefectA.lastName;
+    document.querySelector("#onlytwoprefects .student2").textContent = prefectB.firstName + " " + prefectB.lastName;
+
+    function closeDialog() {
+      document.querySelector("#onlytwoprefects").classList.add("hidden");
+      // its good practice to remove event listener if u dont need it anymore
+      document.querySelector("#onlytwoprefects [data-action=remove1]").removeEventListener("click", clickRemoveA);
+      document.querySelector("#onlytwoprefects [data-action=remove2]").removeEventListener("click", clickRemoveB);
+    }
+
+    function clickRemoveA() {
+      removePrefect(prefectA);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+
+    function clickRemoveB() {
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+  }
+
+  function removePrefect(student) {
+    student.prefect = false;
+    // prefects.length--;
+    const index = allPrefects.indexOf(student);
+    allPrefects.splice(index, 1);
+    buildList();
+  }
+  function makePrefect(student) {
+    student.prefect = true;
+    allPrefects.push(student);
+    buildList();
+    document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
+  }
+}
+
+
 // blood
 
 function defineBloodStatus(alumni) {
@@ -526,12 +549,6 @@ function defineBloodStatus(alumni) {
   } else {
     alumni.blood = "muggle";
   }
-}
-
-// squad close message popup
-function closeMessage() {
-  document.querySelector("#squad").classList.add("hidden");
-  document.querySelector("#squad").removeEventListener("click", closeMessage);
 }
 
 // squad function
@@ -567,6 +584,12 @@ function removeSquadMember(alumni) {
   allSquadMembers.splice(index, 1);
   document.querySelector("[data-filter=squad]").textContent = "Squad" + `(${allSquadMembers.length})`;
   buildList();
+}
+
+// squad close message popup
+function closeMessage() {
+  document.querySelector("#squad").classList.add("hidden");
+  document.querySelector("#squad").removeEventListener("click", closeMessage);
 }
 
 function hackSquad(alumni) {

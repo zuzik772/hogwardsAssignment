@@ -107,7 +107,6 @@ function buildList() {
   displayList(sortedList);
 }
 
-
 function capitalization(fullname) {
   fullname = fullname.toLowerCase();
   let fullnameArray = fullname.split("");
@@ -350,9 +349,7 @@ function showPopUp(student) {
   document.querySelector("#studentPopUp").classList.remove("hidden");
   document.querySelector("#studentPopUp [data-action=remove]").disabled = false;
   document.querySelector("#studentPopUp [data-action=remove]").style.color = "black";
-  document.querySelector("#studentPopUp .closebutton").addEventListener("click", function () {
-    closePopUp();
-  });
+  document.querySelector("#studentPopUp .closebutton").addEventListener("click", closePopUp);
   document.querySelector("#studentPopUp h2").textContent = student.firstName + " " + student.middleName + " " + student.nickName + " " + student.lastName;
   document.querySelector("#studentPopUp .image").src = `images/${student.image}`;
   document.querySelector("#studentPopUp .house").textContent = student.house;
@@ -420,7 +417,6 @@ function showPopUp(student) {
 }
 function closePopUp() {
   document.querySelector("#studentPopUp").classList.add("hidden");
-  // document.querySelector("#studentPopUp [data-action=remove]").textContent = "Expell: " + student.firstName + " " + student.lastName;
 }
 
 function expellStudent(expelledStudent) {
@@ -537,7 +533,6 @@ function tryToMakePrefect(selectedStudent) {
     document.querySelector("[data-filter=prefects]").textContent = "📛Prefects" + `(${allPrefects.length})`;
   }
 }
-
 
 // blood
 
